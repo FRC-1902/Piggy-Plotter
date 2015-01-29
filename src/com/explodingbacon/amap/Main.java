@@ -1,6 +1,8 @@
 package com.explodingbacon.amap;
 
+import javax.swing.JFileChooser;
 import javax.swing.JToggleButton;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Main extends javax.swing.JFrame {
 
@@ -9,7 +11,6 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
-        updateButtons(robotButton);
     }    
 
     @SuppressWarnings("unchecked")
@@ -20,6 +21,12 @@ public class Main extends javax.swing.JFrame {
         robotButton = new javax.swing.JToggleButton();
         commandButton = new javax.swing.JToggleButton();
         driveButton = new javax.swing.JToggleButton();
+        menu = new javax.swing.JMenuBar();
+        file = new javax.swing.JMenu();
+        openRobotButton = new javax.swing.JMenuItem();
+        saveRobotButton = new javax.swing.JMenuItem();
+        openFieldButton = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("A-MAP");
@@ -39,7 +46,6 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 676, Short.MAX_VALUE)
         );
 
-        robotButton.setSelected(true);
         robotButton.setText("Robot");
         robotButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,51 +67,113 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        file.setText("File");
+
+        openRobotButton.setText("Open Robot");
+        openRobotButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openRobotButtonActionPerformed(evt);
+            }
+        });
+        file.add(openRobotButton);
+
+        saveRobotButton.setText("Save Robot");
+        saveRobotButton.setToolTipText("");
+        saveRobotButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveRobotButtonActionPerformed(evt);
+            }
+        });
+        file.add(saveRobotButton);
+
+        openFieldButton.setText("Open Field");
+        openFieldButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFieldButtonActionPerformed(evt);
+            }
+        });
+        file.add(openFieldButton);
+
+        menu.add(file);
+
+        jMenu2.setText("Edit");
+        menu.add(jMenu2);
+
+        setJMenuBar(menu);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(robotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
+                        .addGap(86, 86, 86)
                         .addComponent(robotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
                         .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41)
-                        .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void driveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driveButtonActionPerformed
-        if (driveButton.isSelected()) updateButtons(driveButton);
+        if (driveButton.isSelected()) {
+            updateButtons(driveButton);
+        } else {
+            updateButtons(null);
+        }
     }//GEN-LAST:event_driveButtonActionPerformed
 
     private void robotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_robotButtonActionPerformed
-        if (robotButton.isSelected()) updateButtons(robotButton);
+        if (robotButton.isSelected()) {
+            updateButtons(robotButton);
+        } else {
+            updateButtons(null);
+        }
     }//GEN-LAST:event_robotButtonActionPerformed
 
     private void commandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commandButtonActionPerformed
-        if (commandButton.isSelected()) updateButtons(commandButton);
+        if (commandButton.isSelected()) {
+            updateButtons(commandButton);
+        } else {
+            updateButtons(null);
+        }
     }//GEN-LAST:event_commandButtonActionPerformed
+
+    private void openRobotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openRobotButtonActionPerformed
+    }//GEN-LAST:event_openRobotButtonActionPerformed
+
+    private void saveRobotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveRobotButtonActionPerformed
+    }//GEN-LAST:event_saveRobotButtonActionPerformed
+
+    private void openFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFieldButtonActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("FRC Field Files", "field");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            //TODO read field data from the file & update Board to have the correct FieldPieces 
+        }
+    }//GEN-LAST:event_openFieldButtonActionPerformed
 
     public void updateButtons(JToggleButton button) {
         if (button == driveButton) {
@@ -120,6 +188,11 @@ public class Main extends javax.swing.JFrame {
             selected = commandButton;
             driveButton.setSelected(false);
             robotButton.setSelected(false);
+        } else {
+            selected = null;
+            driveButton.setSelected(false);
+            robotButton.setSelected(false);
+            commandButton.setSelected(false);
         }
     }
     
@@ -161,7 +234,13 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JToggleButton commandButton;
     public static javax.swing.JToggleButton driveButton;
+    private javax.swing.JMenu file;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuBar menu;
+    private javax.swing.JMenuItem openFieldButton;
+    private javax.swing.JMenuItem openRobotButton;
     public static javax.swing.JToggleButton robotButton;
+    private javax.swing.JMenuItem saveRobotButton;
     // End of variables declaration//GEN-END:variables
 }

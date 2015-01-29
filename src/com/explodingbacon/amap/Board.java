@@ -22,7 +22,7 @@ public class Board extends JPanel implements ActionListener {
     public FieldPiece step = null;    
     public Timer timer;
     
-    public Board() {
+    public Board() { //This will eventually be changed to reading field data from a file. Until then, have this.
         arena = new FieldPiece(0, 0, 324, 648, Color.BLUE, null);
         scoringPlatform1 = new FieldPiece(0, 73.25, 187, 34.25, Color.WHITE, "Scoring Platform One");
         scoringPlatform2 = new FieldPiece(137, scoringPlatform1.y + scoringPlatform1.height + 78, 187, 34.25, Color.WHITE, "Scoring Platform Two");
@@ -75,7 +75,7 @@ public class Board extends JPanel implements ActionListener {
         }
         
         //Zone overlays + Loading Zone contents
-        new FieldPiece(1, step.y - 51, arena.width - 1, 50, Color.YELLOW, false, null);
+        new FieldPiece(0.5, step.y - 51, arena.width - 1, 51, Color.YELLOW, false, null);
         for (int i=0; i<3; i++) {
             x = 56.5 + (i * (48 + 33));
             y = scoringPlatform1.y - 33.75 - 21;
@@ -92,25 +92,29 @@ public class Board extends JPanel implements ActionListener {
         Graphics2D g = (Graphics2D) graphics;
         for (FieldPiece p : pieces) {
             p.draw(g);
+            if (p instanceof Robot) {
+                System.out.println("Drew a robot. (wat)");
+            }
         }
         Point p = MouseInfo.getPointerInfo().getLocation();
         Point p2 = getLocationOnScreen();
         int mouseX = p.x - p2.x;
         int mouseY = p.y - p2.y;
-        if (mouseX > 0 && mouseX < getWidth() && mouseY > 0 && mouseY < getHeight()) { //If the mouse click was within the bounds of the board
+        if (mouseX > 0 && mouseX < getWidth() && mouseY > 0 && mouseY < getHeight()) { //If the mouse is within the bounds of this JPanel
             if (Main.selected == Main.robotButton) {
-                g.fillRect(mouseX, mouseY, 32, 32);
+                g.fillRect(mouseX, mouseY, (int) Math.round(32 * Main.multiplier), (int) Math.round(32 * Main.multiplier));
             }
         }
-        //System.out.println("Mouse x: " + mouseX + ", Mouse y: " + mouseY);
         graphics.dispose();
     }
     
-    public void mouseClick(MouseEvent m) {
+    public void mouseClick(MouseEvent m) { //The first three lines are for getting the coordinates of the mouse relative to this JPanel
         Point p = getLocationOnScreen();
-        int mouseX = m.getXOnScreen() - p.x;
+        int mouseX = m.getXOnScreen() - p.x; 
         int mouseY = m.getYOnScreen() - p.y;
-        System.out.println("Mouse click at " + mouseX + " " + mouseY);
+        if (Main.selected  == Main.robotButton) {
+            new RobotConfig(mouseX / Main.multiplier, mouseY / Main.multiplier).setVisible(true);
+        }
     }
     
     public void mouseRelease(MouseEvent m) {}
