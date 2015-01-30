@@ -2,6 +2,7 @@ package com.explodingbacon.amap;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class FieldPiece {
     
@@ -11,7 +12,7 @@ public class FieldPiece {
     public double height = 0;
     public Color color = null;
     public boolean fill = true;
-    public String display ;
+    public String display;
     
     public FieldPiece(double x, double y, double width, double height, Color color, String display) {
         this.x = x;
@@ -43,5 +44,13 @@ public class FieldPiece {
         }
         g.drawRect((int) Math.round(x * Main.multiplier),(int) Math.round(y * Main.multiplier),(int) Math.round(width * Main.multiplier), (int) Math.round(height * Main.multiplier));
         g.setColor(oldColor);
+    }
+    
+    public Rectangle getRect() {
+        return new Rectangle((int) Math.round(x * Main.multiplier),(int) Math.round(y * Main.multiplier),(int) Math.round(width * Main.multiplier), (int) Math.round(height * Main.multiplier));
+    }
+    
+    public boolean clicked() {
+        return false;
     }
 }

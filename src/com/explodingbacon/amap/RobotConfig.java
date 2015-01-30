@@ -4,6 +4,7 @@ public class RobotConfig extends javax.swing.JFrame {
 
     public Double x = null;
     public Double y = null;
+    public Robot robot = null;
     
     public RobotConfig(double x, double y) {
         initComponents();
@@ -11,15 +12,22 @@ public class RobotConfig extends javax.swing.JFrame {
         this.y = y;
     }
     
+    public RobotConfig(Robot robot) {
+        initComponents();
+        this.robot = robot;
+        widthBox.setText(robot.width + "");
+        lengthBox.setText(robot.height + "");
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        lengthBox = new javax.swing.JTextField();
+        widthBox = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        widthBox = new javax.swing.JTextField();
+        lengthBox = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         distanceRight = new javax.swing.JLabel();
         distanceLeft = new javax.swing.JLabel();
@@ -32,21 +40,23 @@ public class RobotConfig extends javax.swing.JFrame {
         confirm = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Robot Configuration");
         setPreferredSize(new java.awt.Dimension(400, 360));
+        setResizable(false);
 
-        jLabel1.setText("Robot Length:");
+        jLabel1.setText("Robot Width:");
 
-        lengthBox.setText("32");
+        widthBox.setText("32");
 
         jLabel2.setText("All distances and sizes are in inches (in.)");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Robot Configuration");
 
-        widthBox.setText("32");
+        lengthBox.setText("32");
 
-        jLabel4.setText("Robot Width:");
+        jLabel4.setText("Robot Length:");
 
         distanceRight.setText("Distance from ARENA_WALL_W:");
 
@@ -117,8 +127,8 @@ public class RobotConfig extends javax.swing.JFrame {
                                         .addComponent(jLabel4))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(widthBox)
-                                        .addComponent(lengthBox))))
+                                        .addComponent(lengthBox)
+                                        .addComponent(widthBox))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,10 +144,10 @@ public class RobotConfig extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lengthBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(widthBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(widthBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lengthBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -168,12 +178,17 @@ public class RobotConfig extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        new Robot(x, y, Double.parseDouble(lengthBox.getText()), Double.parseDouble(widthBox.getText()));
+        if (robot == null) {
+            Board.robot = new Robot(x, y, Double.parseDouble(widthBox.getText()), Double.parseDouble(lengthBox.getText()));
+        } else {
+            robot.width = Double.parseDouble(widthBox.getText());
+            robot.height = Double.parseDouble(lengthBox.getText());
+        }
         dispose();
     }//GEN-LAST:event_confirmActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        dispose(); //Supposedly this will completely destroy this JFrame and all related components. We'll see.
+        dispose();
     }//GEN-LAST:event_cancelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

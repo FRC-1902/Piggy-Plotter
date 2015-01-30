@@ -1,7 +1,16 @@
 package com.explodingbacon.amap;
 
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JToggleButton;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Main extends javax.swing.JFrame {
@@ -26,7 +35,8 @@ public class Main extends javax.swing.JFrame {
         openRobotButton = new javax.swing.JMenuItem();
         saveRobotButton = new javax.swing.JMenuItem();
         openFieldButton = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        edit = new javax.swing.JMenu();
+        undoCommand = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("A-MAP");
@@ -43,7 +53,7 @@ public class Main extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 676, Short.MAX_VALUE)
+            .addGap(0, 658, Short.MAX_VALUE)
         );
 
         robotButton.setText("Robot");
@@ -96,8 +106,22 @@ public class Main extends javax.swing.JFrame {
 
         menu.add(file);
 
-        jMenu2.setText("Edit");
-        menu.add(jMenu2);
+        edit.setText("Edit");
+        edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionPerformed(evt);
+            }
+        });
+
+        undoCommand.setText("Undo last Command");
+        undoCommand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoCommandActionPerformed(evt);
+            }
+        });
+        edit.add(undoCommand);
+
+        menu.add(edit);
 
         setJMenuBar(menu);
 
@@ -128,8 +152,8 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,9 +195,39 @@ public class Main extends javax.swing.JFrame {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            //TODO read field data from the file & update Board to have the correct FieldPieces 
+            File field = chooser.getSelectedFile();
+            if (field.exists()) {
+                Board.pieces.clear();
+                try {
+                   BufferedReader br = new BufferedReader(new FileReader(field));
+                   String info = br.readLine();
+                   for (String command : info.split("]")) {
+                       String[] s = command.split(":");
+                       if (s[0].equals("tote")) {
+                           new Tote(Double.parseDouble(s[1]), Double.parseDouble(s[2]), new Color(Integer.parseInt(s[3]), Integer.parseInt(s[4]), Integer.parseInt(s[5])), Boolean.parseBoolean(s[6]));
+                       } else {
+                           new FieldPiece(Double.parseDouble(s[1]), Double.parseDouble(s[2]), Double.parseDouble(s[3]), Double.parseDouble(s[4]), new Color(Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7])), Boolean.parseBoolean(s[8]),s[9]);
+                       }
+                   }
+                   br.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_openFieldButtonActionPerformed
+
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        if (Board.robot != null && !Board.robot.commands.isEmpty()) {
+            
+        }
+    }//GEN-LAST:event_editActionPerformed
+
+    private void undoCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoCommandActionPerformed
+        if (Board.robot != null && !Board.robot.commands.isEmpty()) {
+            Board.robot.commands.remove(Board.robot.commands.get(Board.robot.commands.size() - 1));
+        }
+    }//GEN-LAST:event_undoCommandActionPerformed
 
     public void updateButtons(JToggleButton button) {
         if (button == driveButton) {
@@ -207,10 +261,9 @@ public class Main extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+                //if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                //}
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -234,13 +287,14 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JToggleButton commandButton;
     public static javax.swing.JToggleButton driveButton;
+    private javax.swing.JMenu edit;
     private javax.swing.JMenu file;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem openFieldButton;
     private javax.swing.JMenuItem openRobotButton;
     public static javax.swing.JToggleButton robotButton;
     private javax.swing.JMenuItem saveRobotButton;
+    private javax.swing.JMenuItem undoCommand;
     // End of variables declaration//GEN-END:variables
 }

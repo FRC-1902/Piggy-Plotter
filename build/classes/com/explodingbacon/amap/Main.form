@@ -36,10 +36,23 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="edit">
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editActionPerformed"/>
+          </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="undoCommand">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Undo last Command"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="undoCommandActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>
@@ -96,10 +109,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" pref="680" max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" pref="662" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -128,7 +141,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="676" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="658" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
