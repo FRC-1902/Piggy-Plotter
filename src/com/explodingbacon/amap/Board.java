@@ -23,7 +23,7 @@ import javax.swing.Timer;
 
 ==Necessary Features==
 
-Add encoder mathstuffs for turning X number of degrees and for driving X number of inches.
+Fix encodermaths for turning and test encodermaths for driving forwards.
 Add a target at the end of each drive command.
 Add turn command support.
 Add custom command support.
@@ -169,19 +169,21 @@ public class Board extends JPanel implements ActionListener {
                 }
             }
         }
-        if (Main.selected  == Main.robotButton) {
+        if (Main.selected == Main.robotButton) {
             new RobotConfig(mouseX / Main.multiplier, mouseY / Main.multiplier).setVisible(true);
         } else if (Main.selected == Main.driveButton) {
-            double lastX = robot.x + (robot.width / 2);
-            double lastY = robot.y + (robot.height / 2);
-            for (Command c : robot.commands) {
-                if (c instanceof DriveCommand) {
-                    DriveCommand d = (DriveCommand) c;
-                    lastX = d.endX;
-                    lastY = d.endY;
+            if (robot != null) {
+                double lastX = robot.x + (robot.width / 2);
+                double lastY = robot.y;
+                for (Command c : robot.commands) {
+                    if (c instanceof DriveCommand) {
+                        DriveCommand d = (DriveCommand) c;
+                        lastX = d.endX;
+                        lastY = d.endY;
+                    }
                 }
+                robot.commands.add(new DriveCommand(lastX, lastY, mouseX / Main.multiplier, mouseY / Main.multiplier));
             }
-            robot.commands.add(new DriveCommand(lastX, lastY, mouseX / Main.multiplier, mouseY / Main.multiplier));
         }
     }
     

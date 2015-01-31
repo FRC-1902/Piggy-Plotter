@@ -1,10 +1,11 @@
 package com.explodingbacon.amap;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,7 @@ public class Main extends javax.swing.JFrame {
         openRobotButton = new javax.swing.JMenuItem();
         saveRobotButton = new javax.swing.JMenuItem();
         openFieldButton = new javax.swing.JMenuItem();
+        saveAutoButton = new javax.swing.JMenuItem();
         edit = new javax.swing.JMenu();
         undoCommand = new javax.swing.JMenuItem();
 
@@ -103,6 +105,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         file.add(openFieldButton);
+
+        saveAutoButton.setText("Save Autonomous");
+        saveAutoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAutoButtonActionPerformed(evt);
+            }
+        });
+        file.add(saveAutoButton);
 
         menu.add(file);
 
@@ -229,6 +239,37 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_undoCommandActionPerformed
 
+    private void saveAutoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAutoButtonActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Autonomous Files (.auto)", "auto");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            if (file.exists()) {
+                file.delete();
+            }
+            try {
+                 file.createNewFile();
+                 BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                 String data = "";
+                 for (Command c : Board.robot.commands) {
+                     for (String[] array : c.data) {
+                         String command = "";
+                         for (String s : array) {
+                             command = command + s + (s == array[array.length - 1] ? "]" : ":");
+                         }
+                         data = data + command;
+                     }
+                 }
+                 bw.write(data);
+                 bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_saveAutoButtonActionPerformed
+
     public void updateButtons(JToggleButton button) {
         if (button == driveButton) {
             selected = driveButton;
@@ -294,6 +335,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem openFieldButton;
     private javax.swing.JMenuItem openRobotButton;
     public static javax.swing.JToggleButton robotButton;
+    private javax.swing.JMenuItem saveAutoButton;
     private javax.swing.JMenuItem saveRobotButton;
     private javax.swing.JMenuItem undoCommand;
     // End of variables declaration//GEN-END:variables
