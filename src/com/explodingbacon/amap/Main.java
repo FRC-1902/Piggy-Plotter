@@ -291,6 +291,16 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
+    public static double sign(double d) {
+        double sign = (Math.abs(d) / d);
+        if (sign >= 0) {
+            sign = 1;
+        } else {
+            sign = -1;
+        }
+        return sign;
+    }
+    
     /**
      * @param args the command line arguments
      */

@@ -7,7 +7,7 @@ import java.util.List;
 public class Robot extends FieldPiece {
     
     public List<Command> commands = new ArrayList<>();
-    public double angle = Math.PI / 2;
+    public double angle = 0; //Set the starting angle to the initial heading
     
     public Robot(double x, double y, double width, double height) {
         super(x, y, width, height, Color.BLACK, null);
