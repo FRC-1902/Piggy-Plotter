@@ -18,4 +18,12 @@ public class Robot extends FieldPiece {
         new RobotConfig(this).setVisible(true);
         return true;
     }
+    
+    public DriveCommand getLastDrive() {
+        DriveCommand last = null;
+        for (Command c : commands) {
+            if (c instanceof DriveCommand) last = (DriveCommand) c;
+        }
+        return last;
+    }
 }

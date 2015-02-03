@@ -44,6 +44,7 @@ public class Board extends JPanel implements ActionListener {
     public FieldPiece scoringPlatform2 = null;
     public FieldPiece step = null;    
     public Timer timer;
+    public static Board self;
     
     public Board() {
           boolean export = false;          
@@ -130,6 +131,7 @@ public class Board extends JPanel implements ActionListener {
                 Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        self = this;
     }
     
     public void paint(Graphics graphics) {

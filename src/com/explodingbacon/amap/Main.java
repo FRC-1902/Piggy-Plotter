@@ -241,11 +241,12 @@ public class Main extends javax.swing.JFrame {
 
     private void saveAutoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAutoButtonActionPerformed
         JFileChooser chooser = new JFileChooser();
+        chooser.setDialogType(JFileChooser.SAVE_DIALOG);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Autonomous Files (.auto)", "auto");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
+            File file = chooser.getSelectedFile();           
             if (file.exists()) {
                 file.delete();
             }
@@ -299,6 +300,10 @@ public class Main extends javax.swing.JFrame {
             sign = -1;
         }
         return sign;
+    }
+    
+    public static int scaleDown(double d) {
+        return (int) (Math.round(d / Main.multiplier));
     }
     
     /**
