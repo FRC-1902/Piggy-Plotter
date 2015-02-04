@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -207,7 +208,11 @@ public class Main extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File field = chooser.getSelectedFile();
             if (field.exists()) {
-                Board.pieces.clear();
+                for (Entity e : new ArrayList<>(Board.entities)) {
+                    if (e instanceof Tote || e instanceof FieldPiece) {
+                        Board.entities.remove(e);
+                    }
+                }
                 try {
                    BufferedReader br = new BufferedReader(new FileReader(field));
                    String info = br.readLine();
@@ -242,6 +247,7 @@ public class Main extends javax.swing.JFrame {
     private void saveAutoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAutoButtonActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+        chooser.setApproveButtonText("Save");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Autonomous Files (.auto)", "auto");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
@@ -300,6 +306,10 @@ public class Main extends javax.swing.JFrame {
             sign = -1;
         }
         return sign;
+    }
+    
+    public static int scaleUp(double d) {
+        return (int) (Math.round(d * Main.multiplier));
     }
     
     public static int scaleDown(double d) {

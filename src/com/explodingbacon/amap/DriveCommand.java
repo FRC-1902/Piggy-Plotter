@@ -1,17 +1,15 @@
 package com.explodingbacon.amap;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
 public class DriveCommand extends Command {
     
-    public double startX;
-    public double startY;
     public double endX;
     public double endY;
     
     public DriveCommand(double startX, double startY, double endX, double endY) {
-        this.startX = startX;
-        this.startY = startY;
+        super(startX, startY);
         this.endX = endX;
         this.endY = endY;
       
@@ -19,7 +17,7 @@ public class DriveCommand extends Command {
         Line2D line2 = new Line2D.Double(startX, startY, endX, endY);
         DriveCommand last = Board.robot.getLastDrive();
         if (last != null) {
-            line1 = new Line2D.Double(last.startX, last.startY, last.endX, last.endY);
+            line1 = new Line2D.Double(last.x, last.y, last.endX, last.endY);
         } else {
             line1 = new Line2D.Double(0, Board.robot.y + Board.robot.height, 0, Board.robot.y);
         }           
@@ -35,6 +33,16 @@ public class DriveCommand extends Command {
         double distance = inchDistance / (Math.PI * 4) * 1024; //Convert from inches to encoder clicks
         //System.out.println("Drive Distance : " + inchDistance + " inches.");
         data.add(new String[]{"drive", distance + "", distance + ""});       
+    }
+    
+    @Override
+    public void draw(Graphics2D g) {
+        g.drawLine(Main.scaleUp(x), Main.scaleUp(y), Main.scaleUp(endX), Main.scaleUp(endY));
+    }
+    
+    @Override
+    public boolean clicked() {
+        return false;
     }
     
     public double angle(Line2D line1, Line2D line2) {

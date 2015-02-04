@@ -13,11 +13,11 @@ public class Robot extends FieldPiece {
         super(x, y, width, height, Color.BLACK, null);
     }
     
-    @Override
-    public boolean clicked() {
-        new RobotConfig(this).setVisible(true);
-        return true;
-    }
+//    @Override
+//    public boolean clicked() {
+//        new RobotConfig(this).setVisible(true);
+//        return true;
+//    }
     
     public DriveCommand getLastDrive() {
         DriveCommand last = null;

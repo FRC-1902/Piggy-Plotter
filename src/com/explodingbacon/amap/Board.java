@@ -37,7 +37,7 @@ Make the robot go through the driving and waiting segments of it's autonomous on
 
 public class Board extends JPanel implements ActionListener {
    
-    public static List<FieldPiece> pieces = new ArrayList<>();
+    public static List<Entity> entities = new ArrayList<>();
     public static Robot robot = null;
     public FieldPiece arena = null;
     public FieldPiece scoringPlatform1 = null;
@@ -112,11 +112,12 @@ public class Board extends JPanel implements ActionListener {
         timer.start();             
         if (export) {
             String data = "";
-            for (FieldPiece p : pieces) {
-                if (p instanceof Tote) {
-                    Tote t = (Tote) p;
+            for (Entity e : entities) {
+                if (e instanceof Tote) {
+                    Tote t = (Tote) e;
                     data = data + "tote:" + (t.x + ":") + (t.y + ":") + (t.color.getRed() + ":") + (t.color.getGreen() + ":") + (t.color.getBlue() + ":") + (t.rotate + "]");
-                } else if (p instanceof FieldPiece) {
+                } else if (e instanceof FieldPiece) {
+                    FieldPiece p = (FieldPiece) e;
                     data = data + "fieldPiece:" + (p.x + ":") + (p.y + ":") + (p.width + ":") + (p.height + ":") + (p.color.getRed() + ":") + (p.color.getGreen() + ":") + (p.color.getBlue() + ":") + (p.fill + ":") + (p.display + "]");
                 }
             }
@@ -137,16 +138,8 @@ public class Board extends JPanel implements ActionListener {
     public void paint(Graphics graphics) {
         super.paint(graphics);
         Graphics2D g = (Graphics2D) graphics;
-        for (FieldPiece p : pieces) {
-            p.draw(g);
-        }
-        if (robot != null) {
-            for (Command c : robot.commands) {
-                if (c instanceof DriveCommand) {
-                    DriveCommand d = (DriveCommand) c;
-                    g.drawLine((int) Math.round(d.startX * Main.multiplier), (int) Math.round(d.startY * Main.multiplier), (int) Math.round(d.endX * Main.multiplier), (int) Math.round(d.endY * Main.multiplier));
-                }
-            }
+        for (Entity e : entities) {
+            e.draw(g);
         }
         Point p = MouseInfo.getPointerInfo().getLocation();
         Point p2 = getLocationOnScreen();
@@ -154,7 +147,7 @@ public class Board extends JPanel implements ActionListener {
         int mouseY = p.y - p2.y;
         if (mouseX > 0 && mouseX < getWidth() && mouseY > 0 && mouseY < getHeight()) { //If the mouse is within the bounds of this JPanel
             if (Main.selected == Main.robotButton) {
-                g.fillRect(mouseX, mouseY, (int) Math.round(32 * Main.multiplier), (int) Math.round(32 * Main.multiplier));
+                g.fillRect(mouseX, mouseY, Main.scaleUp(32), Main.scaleUp(32));
             }
         }
         graphics.dispose();
@@ -164,9 +157,9 @@ public class Board extends JPanel implements ActionListener {
         Point p = getLocationOnScreen();
         int mouseX = m.getXOnScreen() - p.x; 
         int mouseY = m.getYOnScreen() - p.y;
-        for (FieldPiece f : pieces) {
-            if (f.getRect().contains(mouseX, mouseY)) {
-                if (f.clicked()) {
+        for (Entity e : entities) {
+            if (e.getRect().contains(mouseX, mouseY)) {
+                if (e.clicked()) {
                     return;
                 }
             }
@@ -185,6 +178,17 @@ public class Board extends JPanel implements ActionListener {
                     }
                 }
                 robot.commands.add(new DriveCommand(lastX, lastY, mouseX / Main.multiplier, mouseY / Main.multiplier));
+            }
+        } else if (Main.selected == Main.commandButton) {
+            if (robot != null) {
+                double x = robot.x + (robot.width / 2);
+                double y = robot.y + (robot.height / 2);
+                DriveCommand d = robot.getLastDrive();
+                if (d != null) {
+                    x = d.endX;
+                    y = d.endY;
+                }
+                new CommandConfig(x, y).setVisible(true);
             }
         }
     }
