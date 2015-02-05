@@ -19,7 +19,7 @@ public class DriveCommand extends Command {
         if (last != null) {
             line1 = new Line2D.Double(last.x, last.y, last.endX, last.endY);
         } else {
-            line1 = new Line2D.Double(0, Board.robot.y + Board.robot.height, 0, Board.robot.y);
+            line1 = new Line2D.Double(0, Board.robot.y + Board.robot.height, 0, Board.robot.y + (Board.robot.height / 2));
         }           
         System.out.println("==========================");
         double angle = angle(line1, line2);

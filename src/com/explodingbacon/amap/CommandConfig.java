@@ -259,6 +259,7 @@ public class CommandConfig extends javax.swing.JFrame {
             }
             if (c == null) {
                 c = new Command(x, y, dataArray);
+                Board.robot.commands.add(c);
             } else {
                 c.data = new ArrayList<>();
                 c.data.add(dataArray);

@@ -169,7 +169,7 @@ public class Board extends JPanel implements ActionListener {
         } else if (Main.selected == Main.driveButton) {
             if (robot != null) {
                 double lastX = robot.x + (robot.width / 2);
-                double lastY = robot.y;
+                double lastY = robot.y + (robot.height / 2);
                 for (Command c : robot.commands) {
                     if (c instanceof DriveCommand) {
                         DriveCommand d = (DriveCommand) c;
