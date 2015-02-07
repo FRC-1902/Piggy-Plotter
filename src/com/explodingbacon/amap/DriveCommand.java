@@ -24,9 +24,9 @@ public class DriveCommand extends Command {
         System.out.println("==========================");
         double angle = angle(line1, line2);
         angle *= 57.2957795; //Convert from radians to degrees
-        System.out.println("Turn Angle: " + angle + " degrees.");
-        //Board.robot.angle += angle;
-        data.add(new String[]{"turn", angle + ""});
+        Board.robot.angle += angle;
+        System.out.println("Turn Angle: " + angle + " degrees (robot angle should be " + Board.robot.angle + ")");
+        data.add(new String[]{"turn", Board.robot.angle + ""});
       
         double inchDistance = Math.sqrt((endY - startY) * (endY - startY) + (endX - startX) * (endX - startX));
         inchDistance = Main.scaleDown(inchDistance);

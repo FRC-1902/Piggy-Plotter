@@ -1,5 +1,6 @@
 package com.explodingbacon.amap;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
@@ -23,11 +24,11 @@ import javax.swing.Timer;
 
 ==Necessary Features==
 
-Fix encodermaths for turning and test encodermaths for driving forwards.
 Add a target at the end of each drive command.
-Add turn command support.
-Add custom command support.
-Add autonomous saving & loading.
+Add custom turn command support.
+Move the conversion of inches to encoder ticks out of here and into the robot.
+Add autonomous loading.
+Change the gray command squares to command group squares with multiple commands within them.
 Make objects that follow the mouse not lag behind if it moves too fast.
 
 ==When everything else is implemented==
@@ -47,7 +48,15 @@ public class Board extends JPanel implements ActionListener {
     public static Board self;
     
     public Board() {
-          boolean export = false;          
+          boolean export = false;  
+//          new FieldPiece(0, 0, 240, 192, Color.LIGHT_GRAY, "arena");
+//          new FieldPiece(60, 192, 180, 36, Color.LIGHT_GRAY, "more_arena");
+//          
+//          new FieldPiece(24, 204, 6, 6, Color.YELLOW, "pole1");
+//          new FieldPiece(48, 204, 6, 6, Color.YELLOW, "pole2");
+//          
+//          new FieldPiece(120, 216, 12, 12, Color.RED, "placement_marker");
+          
 //        arena = new FieldPiece(0, 0, 324, 648, Color.BLUE, null);
 //        scoringPlatform1 = new FieldPiece(0, 73.25, 187, 34.25, Color.WHITE, "Scoring Platform One");
 //        scoringPlatform2 = new FieldPiece(137, scoringPlatform1.y + scoringPlatform1.height + 78, 187, 34.25, Color.WHITE, "Scoring Platform Two");

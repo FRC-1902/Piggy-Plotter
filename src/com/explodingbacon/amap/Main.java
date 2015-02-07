@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Main extends javax.swing.JFrame {
 
-    public static double multiplier = 1;
+    public static double multiplier = 2;
     public static JToggleButton selected = null;
     
     public Main() {
