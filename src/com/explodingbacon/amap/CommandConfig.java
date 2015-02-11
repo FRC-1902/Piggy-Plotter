@@ -269,7 +269,7 @@ public class CommandConfig extends javax.swing.JFrame {
 
     private void commandNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_commandNameFieldKeyTyped
         if (!commandNameField.getText().equals("")) {
-            confirmButton.setEnabled(true);
+            confirmButton.setEnabled(true);           
         } else {
             confirmButton.setEnabled(false);
         }

@@ -240,7 +240,9 @@ public class Main extends javax.swing.JFrame {
 
     private void undoCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoCommandActionPerformed
         if (Board.robot != null && !Board.robot.commands.isEmpty()) {
-            Board.robot.commands.remove(Board.robot.commands.get(Board.robot.commands.size() - 1));
+            Command dead = Board.robot.commands.get(Board.robot.commands.size() - 1);
+            Board.robot.commands.remove(dead);
+            Board.entities.remove(dead);
         }
     }//GEN-LAST:event_undoCommandActionPerformed
 
