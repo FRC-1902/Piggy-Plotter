@@ -6,28 +6,23 @@ import java.util.List;
 public class CommandConfig extends javax.swing.JFrame {
 
     public List<String> data = new ArrayList<>();
-    public Double x = null;
-    public Double y = null;
     public Command c = null;
+    public CommandGroupConfig config = null;
     
-    public CommandConfig(double x, double y) {
-        initComponents();
-        this.x = x;
-        this.y = y;
-        updateDataList();
-    }
-    
-    public CommandConfig(Command c) {
+    public CommandConfig(Command c, CommandGroupConfig config) {
         initComponents();
         this.c = c;
+        this.config = config;
         int index = 0;
-        for (String s : c.data.get(0)) {
-            if (index == 0) {
-                commandNameField.setText(s);
-            } else {
-                data.add(s);
+        if (!c.data.isEmpty()) {
+            for (String s : c.data.get(0)) {
+                if (index == 0) {
+                    commandNameField.setText(s);
+                } else {
+                    data.add(s);
+                }
+                index++;
             }
-            index++;
         }
         updateDataList();
     }
@@ -65,14 +60,7 @@ public class CommandConfig extends javax.swing.JFrame {
 
         jLabel3.setText("Add data:");
 
-        addDataField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                addDataFieldKeyTyped(evt);
-            }
-        });
-
         addDataButton.setText("Add");
-        addDataButton.setEnabled(false);
         addDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addDataButtonActionPerformed(evt);
@@ -147,10 +135,10 @@ public class CommandConfig extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(confirmButton, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(moveUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(moveDownButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(deleteButton, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(moveUpButton, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                .addComponent(moveDownButton, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18))
         );
@@ -190,10 +178,12 @@ public class CommandConfig extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDataButtonActionPerformed
-        data.add(addDataField.getText());
-        addDataField.setText("");
-        addDataFieldKeyTyped(null);
-        updateDataList();
+        String text = addDataField.getText();
+        if (!text.equals("") && !text.equals(" ")) {
+            data.add(addDataField.getText());
+            addDataField.setText("");
+            updateDataList();
+        }
     }//GEN-LAST:event_addDataButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -231,21 +221,13 @@ public class CommandConfig extends javax.swing.JFrame {
         moveDownButton.setEnabled(moveDownState);
     }//GEN-LAST:event_dataListMouseClicked
 
-    private void addDataFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_addDataFieldKeyTyped
-        if (!addDataField.getText().equals("")) {
-            addDataButton.setEnabled(true);
-        } else {
-            addDataButton.setEnabled(false);
-        }
-    }//GEN-LAST:event_addDataFieldKeyTyped
-
     private void moveUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveUpButtonActionPerformed
-        shiftIndex(data, dataList.getSelectedValue() + "", -1);
+        Util.shiftIndex(data, dataList.getSelectedValue() + "", -1);
         updateDataList();
     }//GEN-LAST:event_moveUpButtonActionPerformed
 
     private void moveDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDownButtonActionPerformed
-        shiftIndex(data, dataList.getSelectedValue() + "", 1);
+        Util.shiftIndex(data, dataList.getSelectedValue() + "", 1);
         updateDataList();
     }//GEN-LAST:event_moveDownButtonActionPerformed
 
@@ -256,14 +238,11 @@ public class CommandConfig extends javax.swing.JFrame {
             for (String s : data) {
                 dataArray[index] = s;
                 index++;
-            }
-            if (c == null) {
-                c = new Command(x, y, dataArray);
-                Board.robot.commands.add(c);
-            } else {
-                c.data = new ArrayList<>();
-                c.data.add(dataArray);
-            }
+            }          
+            c.data = new ArrayList<>();
+            c.data.add(dataArray);
+            Board.robot.commands.add(c);
+            config.addCommand(c);
             dispose();
     }//GEN-LAST:event_confirmButtonActionPerformed
 
@@ -274,18 +253,7 @@ public class CommandConfig extends javax.swing.JFrame {
             confirmButton.setEnabled(false);
         }
     }//GEN-LAST:event_commandNameFieldKeyTyped
-  
-    public void shiftIndex(List<String> list, String s, int change) {
-        int index = 0;
-        for (String s2 : list) {
-            if (s2.equals(s)) {
-                break;
-            }
-            index++;
-        }
-        data.remove(s);
-        data.add(index + change, s);
-    }
+
     
     public void updateDataList() {
         Object oldSelected = dataList.getSelectedValue();

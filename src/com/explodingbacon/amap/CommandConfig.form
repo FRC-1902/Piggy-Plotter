@@ -52,10 +52,10 @@
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="confirmButton" pref="127" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="moveUpButton" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                              <Component id="moveDownButton" alignment="1" min="-2" pref="121" max="-2" attributes="0"/>
-                              <Component id="deleteButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="moveUpButton" alignment="0" pref="121" max="32767" attributes="0"/>
+                              <Component id="moveDownButton" alignment="0" pref="121" max="32767" attributes="0"/>
+                              <Component id="deleteButton" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -126,14 +126,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="addDataField">
-      <Events>
-        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="addDataFieldKeyTyped"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="addDataButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Add"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addDataButtonActionPerformed"/>

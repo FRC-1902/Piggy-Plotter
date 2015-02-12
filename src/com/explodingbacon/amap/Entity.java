@@ -18,7 +18,6 @@ public class Entity {
         this.y = y;
         this.width = width;
         this.height = height;
-        Board.entities.add(this);
     }
     
     public Entity(double x, double y, double width, double height, Color color) {
@@ -27,7 +26,6 @@ public class Entity {
         this.width = width;
         this.height = height;
         this.color = color;
-        Board.entities.add(this);
     }
     
      public Entity(double x, double y, double width, double height, Color color, boolean fill) {
@@ -37,7 +35,6 @@ public class Entity {
         this.height = height;
         this.color = color;
         this.fill = fill;
-        Board.entities.add(this);
     }
     
     public void draw(Graphics2D g) {

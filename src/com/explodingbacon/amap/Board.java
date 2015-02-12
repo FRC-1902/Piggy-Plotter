@@ -1,6 +1,5 @@
 package com.explodingbacon.amap;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
@@ -24,15 +23,15 @@ import javax.swing.Timer;
 
 ==Necessary Features==
 
-Add a target at the end of each drive command.
 Add custom turn command support.
 Move the conversion of inches to encoder ticks out of here and into the robot.
 Add autonomous loading.
 Change the gray command squares to command group squares with multiple commands within them.
+
+==Not important things==
+
+Add a target at the end of each drive command.
 Make objects that follow the mouse not lag behind if it moves too fast.
-
-==When everything else is implemented==
-
 Make the robot go through the driving and waiting segments of it's autonomous on-screen.
 */
 
@@ -150,6 +149,11 @@ public class Board extends JPanel implements ActionListener {
         for (Entity e : entities) {
             e.draw(g);
         }
+        if (robot != null) {
+            for (Command c : robot.commands) {
+                c.draw(g);
+            }
+        }
         Point p = MouseInfo.getPointerInfo().getLocation();
         Point p2 = getLocationOnScreen();
         int mouseX = p.x - p2.x;
@@ -174,7 +178,7 @@ public class Board extends JPanel implements ActionListener {
             }
         }
         if (Main.selected == Main.robotButton) {
-            new RobotConfig(mouseX / Main.multiplier, mouseY / Main.multiplier).setVisible(true);
+            new RobotConfig( new Robot(mouseX / Main.multiplier, mouseY / Main.multiplier, 32, 32) ).setVisible(true);
         } else if (Main.selected == Main.driveButton) {
             if (robot != null) {
                 double lastX = robot.x + (robot.width / 2);
@@ -197,7 +201,7 @@ public class Board extends JPanel implements ActionListener {
                     x = d.endX;
                     y = d.endY;
                 }
-                new CommandConfig(x, y).setVisible(true);
+                new CommandGroupConfig(new CommandGroup(x, y)).setVisible(true);
             }
         }
     }

@@ -2,15 +2,7 @@ package com.explodingbacon.amap;
 
 public class RobotConfig extends javax.swing.JFrame {
 
-    public Double x = null;
-    public Double y = null;
     public Robot robot = null;
-    
-    public RobotConfig(double x, double y) {
-        initComponents();
-        this.x = x;
-        this.y = y;
-    }
     
     public RobotConfig(Robot robot) {
         initComponents();
@@ -26,7 +18,6 @@ public class RobotConfig extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         widthBox = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         lengthBox = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         distanceRight = new javax.swing.JLabel();
@@ -42,7 +33,6 @@ public class RobotConfig extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Robot Configuration");
-        setPreferredSize(new java.awt.Dimension(400, 360));
         setResizable(false);
 
         jLabel1.setText("Robot Width:");
@@ -50,9 +40,6 @@ public class RobotConfig extends javax.swing.JFrame {
         widthBox.setText("32");
 
         jLabel2.setText("All distances and sizes are in inches (in.)");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Robot Configuration");
 
         lengthBox.setText("32");
 
@@ -119,16 +106,14 @@ public class RobotConfig extends javax.swing.JFrame {
                         .addGap(164, 164, 164))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jLabel4))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lengthBox)
-                                        .addComponent(widthBox))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lengthBox, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                                    .addComponent(widthBox)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,8 +125,6 @@ public class RobotConfig extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(widthBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -171,19 +154,17 @@ public class RobotConfig extends javax.swing.JFrame {
                     .addComponent(cancel))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        if (robot == null) {
-            Board.robot = new Robot(x, y, Double.parseDouble(widthBox.getText()), Double.parseDouble(lengthBox.getText()));
-        } else {
-            robot.width = Double.parseDouble(widthBox.getText());
-            robot.height = Double.parseDouble(lengthBox.getText());
-        }
+        robot.width = Double.parseDouble(widthBox.getText());
+        robot.height = Double.parseDouble(lengthBox.getText());
+        Board.robot = robot;
+        Board.entities.add(robot);
         dispose();
     }//GEN-LAST:event_confirmActionPerformed
 
@@ -204,7 +185,6 @@ public class RobotConfig extends javax.swing.JFrame {
     private javax.swing.JTextField distanceUpBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField lengthBox;
     private javax.swing.JTextField widthBox;
