@@ -160,7 +160,7 @@ public class Board extends JPanel implements ActionListener {
         int mouseY = p.y - p2.y;
         if (mouseX > 0 && mouseX < getWidth() && mouseY > 0 && mouseY < getHeight()) { //If the mouse is within the bounds of this JPanel
             if (Main.selected == Main.robotButton) {
-                g.fillRect(mouseX, mouseY, Main.scaleUp(32), Main.scaleUp(32));
+                g.fillRect(mouseX, mouseY, Main.scaleUp(28), Main.scaleUp(24));
             }
         }
         graphics.dispose();
@@ -178,7 +178,7 @@ public class Board extends JPanel implements ActionListener {
             }
         }
         if (Main.selected == Main.robotButton) {
-            new RobotConfig( new Robot(mouseX / Main.multiplier, mouseY / Main.multiplier, 32, 32) ).setVisible(true);
+            new RobotConfig(new Robot(mouseX / Main.multiplier, mouseY / Main.multiplier, 28, 24) ).setVisible(true);
         } else if (Main.selected == Main.driveButton) {
             if (robot != null) {
                 double lastX = robot.x + (robot.width / 2);

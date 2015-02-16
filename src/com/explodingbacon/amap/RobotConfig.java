@@ -9,6 +9,57 @@ public class RobotConfig extends javax.swing.JFrame {
         this.robot = robot;
         widthBox.setText(robot.width + "");
         lengthBox.setText(robot.height + "");
+        FieldPiece found = null;
+        for (double x=robot.x; x > 0; x--) {
+            for (double y = 0; y < robot.height; y++) {
+                double realX = Main.scaleUp(x);
+                double realY = Main.scaleUp(robot.y + y);            
+                for (Entity e : Board.entities) {                   
+                    if (e.getRect().contains(realX, realY) && isValid(e)) {
+                        found = (FieldPiece) e;
+                        System.out.println("Found " + found.display);
+                        distanceLeft.setText("Distance from " + found.display + ":");
+                        distanceLeftBox.setText(Main.scaleDown((robot.x - (found.x + found.width))) + "");
+                        break;
+                    }
+                }
+                if (found != null) {
+                    break;
+                }
+            }
+            if (found != null) {
+                break;
+            }
+        }
+        found = null;
+        for (double x = robot.x; x < Board.self.getWidth(); x++) {
+            for (double y = 0; y < robot.height; y++) {
+                double realX = Main.scaleUp(x);
+                double realY = Main.scaleUp(robot.y + y);            
+                for (Entity e : Board.entities) {                   
+                    if (e.getRect().contains(realX, realY) && isValid(e)) {
+                        found = (FieldPiece) e;
+                        System.out.println("Found " + found.display);
+                        distanceRight.setText("BDistance from " + found.display + ":");
+                        distanceRightBox.setText(Main.scaleDown(found.x - (robot.x + robot.width)) + "");
+                        break;
+                    }
+                }
+                if (found != null) {
+                    break;
+                }
+            }
+            if (found != null) {
+                break;
+            }
+        }
+    }
+    
+    public boolean isValid(Entity e) {
+        if (e instanceof FieldPiece && !(e instanceof Robot) && ((FieldPiece) e).display != null && !((FieldPiece) e).display.equals("null")) {
+            return true;
+        }
+        return false;
     }
     
     @SuppressWarnings("unchecked")
