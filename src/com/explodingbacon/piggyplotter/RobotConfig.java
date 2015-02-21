@@ -1,4 +1,4 @@
-package com.explodingbacon.amap;
+package com.explodingbacon.piggyplotter;
 
 public class RobotConfig extends javax.swing.JFrame {
 

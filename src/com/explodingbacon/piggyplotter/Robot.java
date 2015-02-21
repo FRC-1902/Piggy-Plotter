@@ -1,4 +1,4 @@
-package com.explodingbacon.amap;
+package com.explodingbacon.piggyplotter;
 
 import java.awt.Color;
 import java.util.ArrayList;

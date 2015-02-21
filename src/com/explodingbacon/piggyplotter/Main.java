@@ -1,4 +1,4 @@
-package com.explodingbacon.amap;
+package com.explodingbacon.piggyplotter;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -42,7 +42,7 @@ public class Main extends javax.swing.JFrame {
         undoCommand = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("A-MAP");
+        setTitle("Piggy Plotter");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

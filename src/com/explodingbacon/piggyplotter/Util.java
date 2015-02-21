@@ -1,4 +1,4 @@
-package com.explodingbacon.amap;
+package com.explodingbacon.piggyplotter;
 
 import java.awt.geom.Line2D;
 import java.util.List;

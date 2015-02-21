@@ -1,4 +1,4 @@
-package com.explodingbacon.amap;
+package com.explodingbacon.piggyplotter;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -143,6 +143,7 @@ public class Board extends JPanel implements ActionListener {
         self = this;
     }
     
+    @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
         Graphics2D g = (Graphics2D) graphics;
