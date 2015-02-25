@@ -29,35 +29,38 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="distanceRight" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="distanceRightBox" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="distanceLeft" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="distanceLeftBox" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="distanceUp" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="distanceUpBox" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <Component id="distanceDown" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="distanceDownBox" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
+                      <Component id="distanceDownBox" min="-2" pref="86" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="distanceRight" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="distanceRightBox" min="-2" pref="86" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="distanceUp" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="distanceUpBox" min="-2" pref="86" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="distanceLeft" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="distanceLeftBox" min="-2" pref="86" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -65,8 +68,8 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lengthBox" pref="86" max="32767" attributes="0"/>
-                                  <Component id="widthBox" max="32767" attributes="0"/>
+                                  <Component id="lengthBox" min="-2" pref="86" max="-2" attributes="0"/>
+                                  <Component id="widthBox" min="-2" pref="86" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -97,13 +100,13 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="distanceRight" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="distanceRightBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="distanceLeft" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="distanceLeftBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="distanceLeft" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="distanceLeftBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="distanceRight" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="distanceRightBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -137,6 +140,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="32"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="widthBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -147,20 +153,23 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="32"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lengthBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Robot Length:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="distanceRight">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Distance from ARENA_WALL_W:"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="distanceLeft">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Distance from ARENA_WALL_E:"/>
+        <Property name="text" type="java.lang.String" value="Distance from ARENA_WALL_L:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="distanceRight">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Distance from ARENA_WALL_R:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="distanceUp">
@@ -173,25 +182,37 @@
         <Property name="text" type="java.lang.String" value="Distance from the STEP:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="distanceRightBox">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="32"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JTextField" name="distanceLeftBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="32"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="distanceLeftBoxActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="distanceRightBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="32"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="distanceRightBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="distanceUpBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="32"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="distanceUpBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="distanceDownBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="32"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="distanceDownBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="confirm">
       <Properties>

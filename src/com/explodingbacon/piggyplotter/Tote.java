@@ -9,11 +9,25 @@ public class Tote extends FieldPiece {
     public boolean rotate = false;
     
     public Tote(double x, double y, Color color) {
-        super(x, y, w, h, color, color == Color.YELLOW ? "Yellow Tote" : "Gray Tote");
+        super(x, y, w, h, color, "Unknown Tote");
+        if (similar(color, Color.YELLOW) || similar(color, new Color(255, 255, 0))) {
+            display = "Yellow Tote";
+        } else {
+            display = "Gray Tote";
+        }
     } 
     
     public Tote(double x, double y, Color color, boolean rotate) {
-        super(x, y, rotate ? h : w, rotate ? w : h, color, color == Color.YELLOW ? "Yellow Tote" : "Gray Tote");
+        super(x, y, rotate ? h : w, rotate ? w : h, color, "Unknown Tote");
         this.rotate = rotate;
-    }    
+        if (similar(color, Color.YELLOW) || similar(color, new Color(255, 255, 0))) {
+            display = "Yellow Tote";
+        } else {
+            display = "Gray Tote";
+        }
+    }
+    
+    public boolean similar(Color c1, Color c2) {
+        return (c1.getRed() == c2.getRed() && c1.getGreen() == c2.getGreen() && c1.getBlue() == c2.getBlue());
+    }
 }

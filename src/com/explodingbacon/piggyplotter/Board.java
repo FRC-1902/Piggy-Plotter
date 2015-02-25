@@ -21,32 +21,28 @@ import javax.swing.Timer;
 /*
 ===THE GREAT AND MIGHTY TODO LIST===
 
-==Necessary Features==
+==Necessary Thingss==
 
+Fix distance measurements freaking out when starting on top of a field piece (i.e. scoring platform) and then re-enable it
 Add custom turn command support.
-Move the conversion of inches to encoder ticks out of here and into the robot.
 Add autonomous loading.
-Change the gray command squares to command group squares with multiple commands within them.
 
 ==Not important things==
 
 Add a target at the end of each drive command.
 Make objects that follow the mouse not lag behind if it moves too fast.
-Make the robot go through the driving and waiting segments of it's autonomous on-screen.
+Make the robot go through the driving, turning and waiting segments of it's autonomous on-screen.
 */
 
 public class Board extends JPanel implements ActionListener {
    
     public static List<Entity> entities = new ArrayList<>();
     public static Robot robot = null;
-    public FieldPiece arena = null;
-    public FieldPiece scoringPlatform1 = null;
-    public FieldPiece scoringPlatform2 = null;
-    public FieldPiece step = null;    
+    public static FieldPiece arena = null;
     public Timer timer;
     public static Board self;
     
-    public Board() {
+    public Board() { //Note: Due to a change in how Entities are saved, none of the commented out code below actually works anymore.
           boolean export = false;  
 //          new FieldPiece(0, 0, 240, 192, Color.LIGHT_GRAY, "arena");
 //          new FieldPiece(60, 192, 180, 36, Color.LIGHT_GRAY, "more_arena");

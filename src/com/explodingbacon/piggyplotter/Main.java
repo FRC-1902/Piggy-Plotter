@@ -34,8 +34,6 @@ public class Main extends javax.swing.JFrame {
         driveButton = new javax.swing.JToggleButton();
         menu = new javax.swing.JMenuBar();
         file = new javax.swing.JMenu();
-        openRobotButton = new javax.swing.JMenuItem();
-        saveRobotButton = new javax.swing.JMenuItem();
         openFieldButton = new javax.swing.JMenuItem();
         saveAutoButton = new javax.swing.JMenuItem();
         edit = new javax.swing.JMenu();
@@ -81,23 +79,6 @@ public class Main extends javax.swing.JFrame {
         });
 
         file.setText("File");
-
-        openRobotButton.setText("Open Robot");
-        openRobotButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openRobotButtonActionPerformed(evt);
-            }
-        });
-        file.add(openRobotButton);
-
-        saveRobotButton.setText("Save Robot");
-        saveRobotButton.setToolTipText("");
-        saveRobotButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveRobotButtonActionPerformed(evt);
-            }
-        });
-        file.add(saveRobotButton);
 
         openFieldButton.setText("Open Field");
         openFieldButton.addActionListener(new java.awt.event.ActionListener() {
@@ -194,12 +175,6 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_commandButtonActionPerformed
 
-    private void openRobotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openRobotButtonActionPerformed
-    }//GEN-LAST:event_openRobotButtonActionPerformed
-
-    private void saveRobotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveRobotButtonActionPerformed
-    }//GEN-LAST:event_saveRobotButtonActionPerformed
-
     private void openFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFieldButtonActionPerformed
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("FRC Field Files", "field");
@@ -221,7 +196,11 @@ public class Main extends javax.swing.JFrame {
                        if (s[0].equals("tote")) {
                            Board.entities.add(new Tote(Double.parseDouble(s[1]), Double.parseDouble(s[2]), new Color(Integer.parseInt(s[3]), Integer.parseInt(s[4]), Integer.parseInt(s[5])), Boolean.parseBoolean(s[6])));
                        } else {
-                           Board.entities.add(new FieldPiece(Double.parseDouble(s[1]), Double.parseDouble(s[2]), Double.parseDouble(s[3]), Double.parseDouble(s[4]), new Color(Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7])), Boolean.parseBoolean(s[8]),s[9]));
+                           FieldPiece f = new FieldPiece(Double.parseDouble(s[1]), Double.parseDouble(s[2]), Double.parseDouble(s[3]), Double.parseDouble(s[4]), new Color(Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7])), Boolean.parseBoolean(s[8]),s[9]);
+                           Board.entities.add(f);
+                           if (f.display.equals("Arena")) {
+                               Board.arena = f;
+                           }
                        }
                    }
                    br.close();
@@ -360,10 +339,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem openFieldButton;
-    private javax.swing.JMenuItem openRobotButton;
     public static javax.swing.JToggleButton robotButton;
     private javax.swing.JMenuItem saveAutoButton;
-    private javax.swing.JMenuItem saveRobotButton;
     private javax.swing.JMenuItem undoCommand;
     // End of variables declaration//GEN-END:variables
 }
