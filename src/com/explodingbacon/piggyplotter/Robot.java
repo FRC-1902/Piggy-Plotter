@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Robot extends FieldPiece {
     
-    public List<Command> commands = new ArrayList<>();
+    public List<CommandGroup> commandGroups = new ArrayList<>();
     public double angle = 0;
     
     public Robot(double x, double y, double width, double height) {
@@ -21,8 +21,10 @@ public class Robot extends FieldPiece {
     
     public DriveCommand getLastDrive() {
         DriveCommand last = null;
-        for (Command c : commands) {
-            if (c instanceof DriveCommand) last = (DriveCommand) c;
+        for (CommandGroup cg : commandGroups) {
+            for (Command c : cg.commands) {
+                if (c instanceof DriveCommand) last = (DriveCommand) c;
+            }
         }
         return last;
     }

@@ -10,6 +10,7 @@ public class CommandGroup extends Entity {
     
     public String name = "Command Group";
     public List<Command> commands = new ArrayList<>();
+    public boolean visible = true;
     
     public CommandGroup(double x, double y) {
         super(x, y, 16, 16, Color.LIGHT_GRAY);
@@ -17,30 +18,42 @@ public class CommandGroup extends Entity {
         this.y = y;
     }
     
+    public CommandGroup(boolean visible) {
+        super(0, 0, 0, 0, Color.LIGHT_GRAY);
+    }
+    
     @Override
     public boolean clicked() {
-        new CommandGroupConfig(this).setVisible(true);
-        return true;
+        if (visible) {
+            new CommandGroupConfig(this).setVisible(true);
+            return true;
+        }
+        return false;
     }
     
     @Override
     public Rectangle getRect() {
-        x -= (width / 2);
-        y -= (height / 2);
-        Rectangle rect = super.getRect();
-        x += (width / 2);
-        y += (height / 2);
+        Rectangle rect = new Rectangle(-1, -1, 0, 0);
+        if (visible) {
+            x -= (width / 2);
+            y -= (height / 2);
+            rect = super.getRect();
+            x += (width / 2);
+            y += (height / 2);
+        }
         return rect;
     }
     
     @Override
     public void draw(Graphics2D g) {
-        x -= (width / 2);
-        y -= (height / 2);
-        super.draw(g);
-        int textWidth = g.getFontMetrics().stringWidth(name);
-        g.drawString(name, Main.scaleUp(x + (width / 2) - (textWidth / 4) ), Main.scaleUp(y - (height / 2)));
-        x += (width / 2);
-        y += (height / 2);
+        if (visible) {
+            x -= (width / 2);
+            y -= (height / 2);
+            super.draw(g);
+            int textWidth = g.getFontMetrics().stringWidth(name);
+            g.drawString(name, Main.scaleUp(x + (width / 2) - (textWidth / 4) ), Main.scaleUp(y - (height / 2)));
+            x += (width / 2);
+            y += (height / 2);
+        }
     }
 }

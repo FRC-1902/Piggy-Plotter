@@ -32,6 +32,7 @@ public class Main extends javax.swing.JFrame {
         robotButton = new javax.swing.JToggleButton();
         commandButton = new javax.swing.JToggleButton();
         driveButton = new javax.swing.JToggleButton();
+        resetButton = new javax.swing.JButton();
         menu = new javax.swing.JMenuBar();
         file = new javax.swing.JMenu();
         openFieldButton = new javax.swing.JMenuItem();
@@ -50,14 +51,14 @@ public class Main extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
+            .addGap(0, 645, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 658, Short.MAX_VALUE)
+            .addGap(0, 643, Short.MAX_VALUE)
         );
 
-        robotButton.setText("Robot");
+        robotButton.setText("Add Robot");
         robotButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 robotButtonActionPerformed(evt);
@@ -71,15 +72,23 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        driveButton.setText("Drive");
+        driveButton.setText("Drive To");
         driveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 driveButtonActionPerformed(evt);
             }
         });
 
+        resetButton.setText("Reset Auto");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
+
         file.setText("File");
 
+        openFieldButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         openFieldButton.setText("Open Field");
         openFieldButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +97,8 @@ public class Main extends javax.swing.JFrame {
         });
         file.add(openFieldButton);
 
-        saveAutoButton.setText("Save Autonomous");
+        saveAutoButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        saveAutoButton.setText("Export Autonomous");
         saveAutoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAutoButtonActionPerformed(evt);
@@ -105,7 +115,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        undoCommand.setText("Undo last Command");
+        undoCommand.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+        undoCommand.setText("Undo Drive");
         undoCommand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 undoCommandActionPerformed(evt);
@@ -123,28 +134,29 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(robotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(robotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(robotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -212,16 +224,28 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_openFieldButtonActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        if (Board.robot != null && !Board.robot.commands.isEmpty()) {
-            
+        if (Board.robot != null && !Board.robot.commandGroups.isEmpty()) {
+            //TODO something
         }
     }//GEN-LAST:event_editActionPerformed
 
     private void undoCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoCommandActionPerformed
-        if (Board.robot != null && !Board.robot.commands.isEmpty()) {
-            Command dead = Board.robot.commands.get(Board.robot.commands.size() - 1);
-            Board.robot.commands.remove(dead);
-            Board.entities.remove(dead);
+        if (Board.robot != null && !Board.robot.commandGroups.isEmpty()) {
+            CommandGroup deadOwner = null;
+            Command dead = null;
+            for (CommandGroup cg : Board.robot.commandGroups) {
+                for (Command c : cg.commands) {
+                    if (c instanceof DriveCommand) {
+                        deadOwner = cg;
+                        dead = c;
+                    }
+                }
+            }
+            if (dead != null) {
+                Board.robot.angle -= ((DriveCommand)dead).angle;
+                deadOwner.commands.remove(dead);
+                Board.entities.remove(dead);
+            }
         }
     }//GEN-LAST:event_undoCommandActionPerformed
 
@@ -233,30 +257,40 @@ public class Main extends javax.swing.JFrame {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();           
-            if (file.exists()) {
-                file.delete();
+            File saveFile = chooser.getSelectedFile();    
+            if (!saveFile.getName().contains(".auto")) {
+                saveFile = new File(saveFile.getAbsoluteFile() + ".auto");
+            }
+            if (saveFile.exists()) {
+                saveFile.delete();
             }
             try {
-                 file.createNewFile();
-                 BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                 saveFile.createNewFile();
+                 BufferedWriter bw = new BufferedWriter(new FileWriter(saveFile));
                  String data = "";
-                 for (Command c : Board.robot.commands) {
-                     for (String[] array : c.data) {
-                         String command = "";
-                         for (String s : array) {
-                             command = command + s + (s == array[array.length - 1] ? "]" : ":");
-                         }
-                         data = data + command;
-                     }
-                 }
-                 bw.write(data);
-                 bw.close();
+                for (CommandGroup cg : Board.robot.commandGroups) {
+                    for (Command c : cg.commands) {
+                        for (String[] array : c.data) {
+                            String command = "";
+                            for (String s : array) {
+                                command = command + s + (s.equals(array[array.length - 1]) ? "]" : ":");
+                            }
+                            data = data + command;
+                        }
+                    }
+                }
+                bw.write(data);
+                bw.close();
             } catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_saveAutoButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        Board.entities.remove(Board.robot);
+        Board.robot = null;
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     public void updateButtons(JToggleButton button) {
         if (button == driveButton) {
@@ -297,20 +331,10 @@ public class Main extends javax.swing.JFrame {
         return (int) (Math.round(d / Main.multiplier));
     }
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                //if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                //}
+                javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -321,9 +345,6 @@ public class Main extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
@@ -339,6 +360,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem openFieldButton;
+    private javax.swing.JButton resetButton;
     public static javax.swing.JToggleButton robotButton;
     private javax.swing.JMenuItem saveAutoButton;
     private javax.swing.JMenuItem undoCommand;
