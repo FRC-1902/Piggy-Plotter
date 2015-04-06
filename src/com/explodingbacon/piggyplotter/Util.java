@@ -28,11 +28,11 @@ public class Util {
         double[] crossProduct = crossProduct(new double[]{xDiff1, yDiff1, 0}, new double[]{xDiff2, yDiff2, 0});
         if (Main.sign(crossProduct[2]) == -1) { //Turn left
             if (angle < 0) {
-                angle *= -1;
+                angle *= -1; //Make it positive
             }
         } else { //Turn right
             if (angle > 0) {
-                angle *= -1;
+                angle *= -1; //Make it negative
             }
         }
         return angle;

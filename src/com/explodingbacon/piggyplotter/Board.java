@@ -22,7 +22,7 @@ import javax.swing.Timer;
 /*
 ===THE GREAT AND MIGHTY TODO LIST===
 
-Make the robot distance display actually show correct information.
+Make the robot distance display actually show CORRECT information.
 Change the DriveCommand class to be a DriveGroup class that generates a drive and turn command and makes itself invisible and uneditable. 
 COMPLETELY fix distance measurements freaking out when starting on top of a field piece (i.e. scoring platform) and then re-enable it
 Add the ability to create turn commands independently from drive commands.
@@ -60,7 +60,7 @@ public class Board extends JPanel implements ActionListener {
         entities.add(scoringPlatform2);
         entities.add(step);
         
-        //All the totes
+        //The landfill. *shudder*
         for (int i=0; i<5; i++) {
             entities.add(new Tote(i * Tote.w, step.y - Tote.h, Color.GRAY));
         }
@@ -105,13 +105,41 @@ public class Board extends JPanel implements ActionListener {
             entities.add(new Tote((arena.width - Tote.w) - (i * Tote.w), step.y - Tote.h, Color.GRAY));
         }
         
+        //Left set of totes and containers on the step
+        x = 0; 
+        for (int i=0; i<8; i++) {
+            if (i != 2 && i != 6) {
+                entities.add(new Tote(x, step.y, Color.GRAY, true));
+                x += Tote.h;
+            } else {
+                entities.add(new RC(x, step.y + 3.5));
+                x += RC.w;
+            }
+        }
+        
+        //Right set of totes and containers on the step
+        x = arena.width - Tote.h;
+        for (int i=0; i<8; i++) {
+            if (i != 2 && i != 6) {
+                entities.add(new Tote(x, step.y, Color.GRAY, true));
+                if (i+1 == 2 || i+1 == 6) {
+                    x -= RC.w;
+                } else {
+                    x -= Tote.h;
+                }
+            } else {
+                entities.add(new RC(x, step.y + 3.5));
+                x -= Tote.h;
+            }
+        }       
+        
         //Zone overlays + Loading Zone contents
         entities.add(new FieldPiece(0.5, step.y - 51, arena.width - 1, 51, Color.YELLOW, false, null));
         for (int i=0; i<3; i++) {
             x = 56.5 + (i * (48 + 33));
             y = scoringPlatform1.y - 33.75 - 21;
             entities.add(new Tote(x + 1.5, y + 1.5, Color.YELLOW));
-            entities.add(new FieldPiece(x + Tote.w + 1.5, y + 1.0, 18, 18, new Color(16, 186, 71), "Recycling Bin"));
+            entities.add(new RC(x + Tote.w + 1.5, y + 1.0));
             entities.add(new FieldPiece(x, y, 48, 21, Color.YELLOW, false, null));
         }
         
