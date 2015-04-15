@@ -1,5 +1,6 @@
 package com.explodingbacon.piggyplotter;
 
+import com.explodingbacon.piggyplotter.fields.CustomField;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -195,30 +196,7 @@ public class Main extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File field = chooser.getSelectedFile();
             if (field.exists()) {
-                for (Entity e : new ArrayList<>(Board.entities)) {
-                    if (e instanceof Tote || e instanceof FieldPiece) {
-                        Board.entities.remove(e);
-                    }
-                }
-                try {
-                   BufferedReader br = new BufferedReader(new FileReader(field));
-                   String info = br.readLine();
-                   for (String command : info.split("]")) {
-                       String[] s = command.split(":");
-                       if (s[0].equals("tote")) {
-                           Board.entities.add(new Tote(Double.parseDouble(s[1]), Double.parseDouble(s[2]), new Color(Integer.parseInt(s[3]), Integer.parseInt(s[4]), Integer.parseInt(s[5])), Boolean.parseBoolean(s[6])));
-                       } else {
-                           FieldPiece f = new FieldPiece(Double.parseDouble(s[1]), Double.parseDouble(s[2]), Double.parseDouble(s[3]), Double.parseDouble(s[4]), new Color(Integer.parseInt(s[5]), Integer.parseInt(s[6]), Integer.parseInt(s[7])), Boolean.parseBoolean(s[8]),s[9]);
-                           Board.entities.add(f);
-                           if (f.display.equals("Arena")) {
-                               Board.arena = f;
-                           }
-                       }
-                   }
-                   br.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                Board.field = new CustomField(field);
             }
         }
     }//GEN-LAST:event_openFieldButtonActionPerformed
@@ -244,7 +222,7 @@ public class Main extends javax.swing.JFrame {
             if (dead != null) {
                 Board.robot.angle -= ((DriveCommand)dead).angle;
                 deadOwner.commands.remove(dead);
-                Board.entities.remove(dead);
+                Board.field.parts.remove(dead);
             }
         }
     }//GEN-LAST:event_undoCommandActionPerformed
@@ -288,7 +266,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAutoButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        Board.entities.remove(Board.robot);
+        Board.field.parts.remove(Board.robot);
         Board.robot = null;
     }//GEN-LAST:event_resetButtonActionPerformed
 

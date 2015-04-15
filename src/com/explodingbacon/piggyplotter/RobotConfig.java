@@ -46,7 +46,7 @@ public class RobotConfig extends javax.swing.JFrame {
             for (double y = 0; y < rHeight; y++) {
                 double realX = Main.scaleUp(x);
                 double realY = Main.scaleUp(rY + y);            
-                for (Entity e : Board.entities) {                   
+                for (Entity e : Board.field.parts) {                   
                     if (e.getRect().contains(realX, realY) && isValid(e)) {
                         found = (FieldPiece) e;
                         distanceLeft.setText("(Left) Distance from " + found.display + ":");
@@ -70,11 +70,11 @@ public class RobotConfig extends javax.swing.JFrame {
             distanceLeftBox.setText(rX + "");
         }
         found = null;
-        for (double x = rX; x < Board.arena.width; x++) {
+        for (double x = rX; x < Board.field.arena.width; x++) {
             for (double y = 0; y < rHeight; y++) {
                 double realX = Main.scaleUp(x);
                 double realY = Main.scaleUp(rY + y);            
-                for (Entity e : Board.entities) {                   
+                for (Entity e : Board.field.parts) {                   
                     if (e.getRect().contains(realX, realY) && isValid(e)) {
                         found = (FieldPiece) e;
                         distanceRight.setText("(Right) Distance from " + found.display + ":");
@@ -95,14 +95,14 @@ public class RobotConfig extends javax.swing.JFrame {
         }
         if (found == null) {
             distanceRight.setText("(Right) Distance from Arena Wall:");
-            distanceRightBox.setText(Board.arena.width - (rX + rWidth) + "");
+            distanceRightBox.setText(Board.field.arena.width - (rX + rWidth) + "");
         }
         found = null;
         for (double y = rY; y > -1; y--) {
             for (double x = 0; x < rWidth; x++) {
                 double realX = Main.scaleUp(rX + x);
                 double realY = Main.scaleUp(y);            
-                for (Entity e : Board.entities) {                   
+                for (Entity e : Board.field.parts) {                   
                     if (e.getRect().contains(realX, realY) && isValid(e)) {
                         found = (FieldPiece) e;
                         distanceUp.setText("(Up) Distance from " + found.display + ":");
@@ -126,11 +126,11 @@ public class RobotConfig extends javax.swing.JFrame {
             distanceUpBox.setText(rY + "");
         }
         found = null;
-        for (double y = rY; y < Board.arena.height; y++) {
+        for (double y = rY; y < Board.field.arena.height; y++) {
             for (double x = 0; x < rWidth; x++) {
                 double realX = Main.scaleUp(rX + x);
                 double realY = Main.scaleUp(y);            
-                for (Entity e : Board.entities) {                   
+                for (Entity e : Board.field.parts) {                   
                     if (e.getRect().contains(realX, realY) && isValid(e)) {
                         found = (FieldPiece) e;
                         distanceDown.setText("(Down) Distance from " + found.display + ":");
@@ -368,7 +368,7 @@ public class RobotConfig extends javax.swing.JFrame {
         robot.height = rHeight;
         robot.angle = Double.parseDouble(angleBox.getText());
         Board.robot = robot;
-        Board.entities.add(robot);
+        Board.field.parts.add(robot);
         dispose();
     }//GEN-LAST:event_confirmActionPerformed
 
@@ -412,7 +412,7 @@ public class RobotConfig extends javax.swing.JFrame {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         robot.commandGroups.clear();
-        Board.entities.remove(robot);
+        Board.field.parts.remove(robot);
         Board.robot = null;
         dispose();
     }//GEN-LAST:event_deleteActionPerformed

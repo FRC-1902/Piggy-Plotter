@@ -1,5 +1,7 @@
 package com.explodingbacon.piggyplotter;
 
+import com.explodingbacon.piggyplotter.fields.RecycleRush;
+import com.explodingbacon.piggyplotter.fields.Field;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,8 +14,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -25,23 +25,21 @@ import javax.swing.Timer;
 Make the robot distance display actually show CORRECT information.
 Change the DriveCommand class to be a DriveGroup class that generates a drive and turn command and makes itself invisible and uneditable. 
 COMPLETELY fix distance measurements freaking out when starting on top of a field piece (i.e. scoring platform) and then re-enable it
+Add built-in field selection.
 Add the ability to create turn commands independently from drive commands.
 Add autonomous loading.
 Add a target/robot at the end of each drive command.
-Make objects that follow the mouse not lag behind if it moves too fast.
 Make the robot be able to run through the autonomous on-screen.
 */
-
 public class Board extends JPanel implements ActionListener {
-   
-    public static List<Entity> entities = new ArrayList<>();
+
+    public static Field field = new RecycleRush();
     public static Robot robot = null;
-    public static FieldPiece arena = null;
     public Timer timer;
     public static Board self;
-    
+
     public Board() {
-          boolean export = false;  
+        boolean export = false;
 //          new FieldPiece(0, 0, 240, 192, Color.LIGHT_GRAY, "arena");
 //          new FieldPiece(60, 192, 180, 36, Color.LIGHT_GRAY, "more_arena");
 //          
@@ -49,106 +47,13 @@ public class Board extends JPanel implements ActionListener {
 //          new FieldPiece(48, 204, 6, 6, Color.YELLOW, "pole2");
 //          
 //          new FieldPiece(120, 216, 12, 12, Color.RED, "placement_marker");
-          
-        arena = new FieldPiece(0, 0, 324, 648, new Color(57, 106, 198), null);
-        FieldPiece scoringPlatform1 = new FieldPiece(0, 73.25, 187, 34.25, Color.WHITE, "Scoring Platform One");
-        FieldPiece scoringPlatform2 = new FieldPiece(137, scoringPlatform1.y + scoringPlatform1.height + 78, 187, 34.25, Color.WHITE, "Scoring Platform Two");
-        FieldPiece step = new FieldPiece(0, scoringPlatform2.y + scoringPlatform2.height + 78, 324, 25, Color.WHITE, "the Step"); //The 78 here is NOT final
-        
-        entities.add(arena);
-        entities.add(scoringPlatform1);
-        entities.add(scoringPlatform2);
-        entities.add(step);
-        
-        //The landfill. *shudder*
-        for (int i=0; i<5; i++) {
-            entities.add(new Tote(i * Tote.w, step.y - Tote.h, Color.GRAY));
-        }
-        
-        double x = 0;
-        double y = 0;
-        for (int i=0; i<2; i++) {
-            y = step.y - Tote.h - Tote.w;
-            for (int j=0; j<2; j++) {
-                x += j !=0 ? Tote.h : 0;               
-                entities.add(new Tote(x, y, Color.GRAY, true));
-            }
-            x += Tote.h;
-            for (int j=0; j<2; j++) {
-                y = step.y - (Tote.h * 2) - (j * Tote.h);
-                entities.add(new Tote(x, y, Color.GRAY));
-            }
-            x += Tote.w + 0.5;
-        }
-        y = step.y - Tote.h - Tote.w;
-        entities.add(new Tote(x - 0.5, y, Color.GRAY, true));
-        
-        x = arena.width - Tote.h;
-        y = 0;
-        for (int i=0; i<2; i++) {
-            y = step.y - Tote.h - Tote.w;
-            for (int j=0; j<2; j++) {
-                x -= j !=0 ? Tote.h : 0;               
-                entities.add(new Tote(x, y, Color.GRAY, true));
-            }
-            x -= Tote.w;
-            for (int j=0; j<2; j++) {
-                y = step.y - (Tote.h * 2) - (j * Tote.h);
-                entities.add(new Tote(x, y, Color.GRAY));
-            }
-            x -= Tote.h;
-        }
-        y = step.y - Tote.h - Tote.w;
-        entities.add(new Tote(x, y, Color.GRAY, true));
-        
-        for (int i=0; i<5; i++) {
-            entities.add(new Tote((arena.width - Tote.w) - (i * Tote.w), step.y - Tote.h, Color.GRAY));
-        }
-        
-        //Left set of totes and containers on the step
-        x = 0; 
-        for (int i=0; i<8; i++) {
-            if (i != 2 && i != 6) {
-                entities.add(new Tote(x, step.y, Color.GRAY, true));
-                x += Tote.h;
-            } else {
-                entities.add(new RC(x, step.y + 3.5));
-                x += RC.w;
-            }
-        }
-        
-        //Right set of totes and containers on the step
-        x = arena.width - Tote.h;
-        for (int i=0; i<8; i++) {
-            if (i != 2 && i != 6) {
-                entities.add(new Tote(x, step.y, Color.GRAY, true));
-                if (i+1 == 2 || i+1 == 6) {
-                    x -= RC.w;
-                } else {
-                    x -= Tote.h;
-                }
-            } else {
-                entities.add(new RC(x, step.y + 3.5));
-                x -= Tote.h;
-            }
-        }       
-        
-        //Zone overlays + Loading Zone contents
-        entities.add(new FieldPiece(0.5, step.y - 51, arena.width - 1, 51, Color.YELLOW, false, null));
-        for (int i=0; i<3; i++) {
-            x = 56.5 + (i * (48 + 33));
-            y = scoringPlatform1.y - 33.75 - 21;
-            entities.add(new Tote(x + 1.5, y + 1.5, Color.YELLOW));
-            entities.add(new RC(x + Tote.w + 1.5, y + 1.0));
-            entities.add(new FieldPiece(x, y, 48, 21, Color.YELLOW, false, null));
-        }
-        
+
         addMouseListener(new MouseTracker(this));
         timer = new Timer(25, this);
-        timer.start();             
+        timer.start();
         if (export) {
             String data = "";
-            for (Entity e : entities) {
+            for (Entity e : field.parts) {
                 if (e instanceof Tote) {
                     Tote t = (Tote) e;
                     data = data + "tote:" + (t.x + ":") + (t.y + ":") + (t.color.getRed() + ":") + (t.color.getGreen() + ":") + (t.color.getBlue() + ":") + (t.rotate + "]");
@@ -159,7 +64,9 @@ public class Board extends JPanel implements ActionListener {
             }
             try {
                 File file = new File("generated.field");
-                if (file.exists()) file.delete();
+                if (file.exists()) {
+                    file.delete();
+                }
                 file.createNewFile();
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file));
                 bw.write(data);
@@ -170,12 +77,12 @@ public class Board extends JPanel implements ActionListener {
         }
         self = this;
     }
-    
+
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
         Graphics2D g = (Graphics2D) graphics;
-        for (Entity e : entities) {
+        for (Entity e : field.parts) {
             e.draw(g);
         }
         if (robot != null) {
@@ -192,17 +99,19 @@ public class Board extends JPanel implements ActionListener {
         int mouseY = p.y - p2.y;
         if (mouseX > 0 && mouseX < getWidth() && mouseY > 0 && mouseY < getHeight()) { //If the mouse is within the bounds of this JPanel
             if (Main.selected == Main.robotButton) {
-                if (robot == null) g.fillRect(mouseX - (Main.scaleUp(28) / 2), mouseY - (Main.scaleUp(24) / 2), Main.scaleUp(28), Main.scaleUp(24));
+                if (robot == null) {
+                    g.fillRect(mouseX - (Main.scaleUp(28) / 2), mouseY - (Main.scaleUp(24) / 2), Main.scaleUp(28), Main.scaleUp(24));
+                }
             }
         }
         graphics.dispose();
     }
-    
+
     public void mouseClick(MouseEvent m) { //The first three lines are for getting the coordinates of the mouse relative to this JPanel
         Point p = getLocationOnScreen();
-        int mouseX = m.getXOnScreen() - p.x; 
+        int mouseX = m.getXOnScreen() - p.x;
         int mouseY = m.getYOnScreen() - p.y;
-        for (Entity e : entities) {
+        for (Entity e : field.parts) {
             if (e.getRect().contains(mouseX, mouseY)) {
                 if (e.clicked()) {
                     return;
@@ -219,13 +128,15 @@ public class Board extends JPanel implements ActionListener {
             }
         }
         if (Main.selected == Main.robotButton) {
-            if (Board.robot == null) new RobotConfig(new Robot((mouseX / Main.multiplier) - (Main.scaleUp(7)), (mouseY / Main.multiplier) - (Main.scaleUp(6)), 28, 24)).setVisible(true);
+            if (Board.robot == null) {
+                new RobotConfig(new Robot((mouseX / Main.multiplier) - (Main.scaleUp(7)), (mouseY / Main.multiplier) - (Main.scaleUp(6)), 28, 24)).setVisible(true);
+            }
         } else if (Main.selected == Main.driveButton) {
             if (robot != null) {
                 double lastX = robot.x + (robot.width / 2);
                 double lastY = robot.y + (robot.height / 2);
                 for (CommandGroup cg : robot.commandGroups) {
-                for (Command c : cg.commands) {
+                    for (Command c : cg.commands) {
                         if (c instanceof DriveCommand) {
                             DriveCommand d = (DriveCommand) c;
                             lastX = d.endX;
@@ -250,11 +161,12 @@ public class Board extends JPanel implements ActionListener {
             }
         }
     }
-    
-    public void mouseRelease(MouseEvent m) {}
-    
+
+    public void mouseRelease(MouseEvent m) {
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
-    }   
+    }
 }
