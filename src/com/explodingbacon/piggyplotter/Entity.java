@@ -41,10 +41,10 @@ public class Entity {
         Color oldColor = g.getColor();
         if (color != null) g.setColor(color);
         if (fill) {
-            g.fillRect((int) Math.round(x * Main.multiplier),(int) Math.round(y * Main.multiplier),(int) Math.round(width * Main.multiplier), (int) Math.round(height * Main.multiplier));
+            g.fillRect((int) Main.scaleUp(x),(int) Main.scaleUp(y),(int) Main.scaleUp(width), (int) Main.scaleUp(height));
             g.setColor(oldColor);
         }
-        g.drawRect((int) Math.round(x * Main.multiplier),(int) Math.round(y * Main.multiplier),(int) Math.round(width * Main.multiplier), (int) Math.round(height * Main.multiplier));
+        g.drawRect((int) Main.scaleUp(x),(int) Main.scaleUp(y),(int) Main.scaleUp(width), (int) Main.scaleUp(height));
         g.setColor(oldColor);
     }
     

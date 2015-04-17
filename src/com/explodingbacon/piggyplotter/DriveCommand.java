@@ -20,8 +20,8 @@ public class DriveCommand extends Command {
         DriveCommand last = Board.robot.getLastDrive();
         if (last != null) {
             line1 = new Line2D.Double(last.x, last.y, last.endX, last.endY);
-        } else {
-            line1 = new Line2D.Double(0, Board.robot.y + (Board.robot.height / 2), 0, Board.robot.y + (Board.robot.height / 2) - 1);
+        } else {        
+            line1 = new Line2D.Double(Board.robot.x + (Board.robot.width / 2), Board.robot.y + (Board.robot.height / 2) - 1, Board.robot.x + (Board.robot.width / 2), Board.robot.y + (Board.robot.height / 2));
         }           
         angle = Util.angle(line1, line2);
         angle *= 57.2957795; //Convert from radians to degrees
@@ -54,7 +54,7 @@ public class DriveCommand extends Command {
         inchDistance = Math.sqrt((endY - startY) * (endY - startY) + (endX - startX) * (endX - startX));
         inchDistance = Main.scaleDown(inchDistance);
         //double distance = inchDistance / (Math.PI * 4) * 1024; //Convert from inches to encoder clicks
-        //System.out.println("Drive Distance : " + inchDistance + " inches.");
+        //System.out.println("Distance : " + inchDistance + " inches.");
         data.add(new String[]{"drive", inchDistance + "", inchDistance + ""}); 
     }
     

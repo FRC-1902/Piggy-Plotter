@@ -2,7 +2,6 @@ package com.explodingbacon.piggyplotter;
 
 import com.explodingbacon.piggyplotter.fields.RecycleRush;
 import com.explodingbacon.piggyplotter.fields.Field;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
@@ -22,7 +21,6 @@ import javax.swing.Timer;
 /*
 ===THE GREAT AND MIGHTY TODO LIST===
 
-Make the robot distance display actually show CORRECT information.
 Change the DriveCommand class to be a DriveGroup class that generates a drive and turn command and makes itself invisible and uneditable. 
 COMPLETELY fix distance measurements freaking out when starting on top of a field piece (i.e. scoring platform) and then re-enable it
 Add built-in field selection.
