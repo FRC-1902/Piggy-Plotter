@@ -5,32 +5,28 @@ import java.awt.event.MouseListener;
 
 public class MouseTracker implements MouseListener {
 
-    public Board board;
+    ClickableJPanel p;
     
-    public MouseTracker(Board board) {
-        this.board = board;
+    public MouseTracker(ClickableJPanel p) {
+        this.p = p;
     }
     
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
     public void mousePressed(MouseEvent e) {
-        board.mouseClick(e);
+        p.mouseClicked(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        board.mouseRelease(e);
+        p.mouseReleased(e);
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-    }
-    
+    public void mouseExited(MouseEvent e) {}   
 }

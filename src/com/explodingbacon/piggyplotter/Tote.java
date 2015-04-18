@@ -9,7 +9,7 @@ public class Tote extends FieldPiece {
     public boolean rotate = false;
     
     public Tote(double x, double y, Color color) {
-        super(x, y, w, h, color, "Unknown Tote");
+        super(x, y, w, h, color, "Mystery Tote");
         if (similar(color, Color.YELLOW) || similar(color, new Color(255, 255, 0))) {
             display = "Yellow Tote";
         } else {
@@ -18,7 +18,7 @@ public class Tote extends FieldPiece {
     } 
     
     public Tote(double x, double y, Color color, boolean rotate) {
-        super(x, y, rotate ? h : w, rotate ? w : h, color, "Unknown Tote");
+        super(x, y, rotate ? h : w, rotate ? w : h, color, "Mystery Tote");
         this.rotate = rotate;
         if (similar(color, Color.YELLOW) || similar(color, new Color(255, 255, 0))) {
             display = "Yellow Tote";

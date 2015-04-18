@@ -5,6 +5,12 @@ import java.util.List;
 
 public class Util {
     
+    /**
+     * Shift the index of an object in a list up or down a certain amount.
+     * @param list The list the object is in.
+     * @param o The object who's index is being changed. 
+     * @param change How much the index should be changed.
+     */
     public static <T> void shiftIndex(List<T> list, Object o, int change) {
         int index = 0;
         T type = null;
@@ -15,10 +21,18 @@ public class Util {
             }
             index++;
         }
-        list.remove(type);
-        list.add(index + change, type);
+        if (type != null) {
+            list.remove(type);
+            list.add(index + change, type);
+        }
     }
     
+    /**
+     * Get the angle of two lines.
+     * @param line1 The first line.
+     * @param line2 The second line.
+     * @return The angle of the two lines.
+     */
     public static double angle(Line2D line1, Line2D line2) {
         double xDiff1 = line1.getX2() - line1.getX1();
         double xDiff2 = line2.getX2() - line2.getX1();
@@ -35,6 +49,7 @@ public class Util {
                 angle *= -1; //Make it negative
             }
         }
+        angle *= 57.2957795; //Convert from radians to degrees
         return angle;
     }
     

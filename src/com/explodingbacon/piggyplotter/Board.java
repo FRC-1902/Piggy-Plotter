@@ -1,7 +1,8 @@
 package com.explodingbacon.piggyplotter;
 
-import com.explodingbacon.piggyplotter.fields.RecycleRush;
-import com.explodingbacon.piggyplotter.fields.Field;
+import com.explodingbacon.piggyplotter.field.RecycleRush;
+import com.explodingbacon.piggyplotter.field.Field;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
@@ -13,23 +14,23 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /*
 ===THE GREAT AND MIGHTY TODO LIST===
 
-Change the DriveCommand class to be a DriveGroup class that generates a drive and turn command and makes itself invisible and uneditable. 
 COMPLETELY fix distance measurements freaking out when starting on top of a field piece (i.e. scoring platform) and then re-enable it
-Add built-in field selection.
+Finish built-in field selection.
 Add the ability to create turn commands independently from drive commands.
 Add autonomous loading.
 Add a target/robot at the end of each drive command.
 Make the robot be able to run through the autonomous on-screen.
 */
-public class Board extends JPanel implements ActionListener {
+public class Board extends ClickableJPanel implements ActionListener {
 
     public static Field field = new RecycleRush();
     public static Robot robot = null;
@@ -98,24 +99,21 @@ public class Board extends JPanel implements ActionListener {
         if (mouseX > 0 && mouseX < getWidth() && mouseY > 0 && mouseY < getHeight()) { //If the mouse is within the bounds of this JPanel
             if (Main.selected == Main.robotButton) {
                 if (robot == null) {
+                    Color oldColor = g.getColor();
+                    g.setColor(Main.baconOrange);
                     g.fillRect(mouseX - (Main.scaleUp(28) / 2), mouseY - (Main.scaleUp(24) / 2), Main.scaleUp(28), Main.scaleUp(24));
+                    g.setColor(oldColor);
                 }
             }
         }
         graphics.dispose();
     }
 
-    public void mouseClick(MouseEvent m) { //The first three lines are for getting the coordinates of the mouse relative to this JPanel
+    @Override
+    public void mouseReleased(MouseEvent m) { //The first three lines are for getting the coordinates of the mouse relative to this JPanel
         Point p = getLocationOnScreen();
         int mouseX = m.getXOnScreen() - p.x;
         int mouseY = m.getYOnScreen() - p.y;
-        for (Entity e : field.parts) {
-            if (e.getRect().contains(mouseX, mouseY)) {
-                if (e.clicked()) {
-                    return;
-                }
-            }
-        }
         if (robot != null) {
             for (CommandGroup cg : robot.commandGroups) {
                 if (cg.getRect().contains(mouseX, mouseY)) {
@@ -125,6 +123,13 @@ public class Board extends JPanel implements ActionListener {
                 }
             }
         }
+        for (Entity e : field.parts) {
+            if (e.getRect().contains(mouseX, mouseY)) {
+                if (e.clicked()) {
+                    return;
+                }
+            }
+        }        
         if (Main.selected == Main.robotButton) {
             if (Board.robot == null) {
                 new RobotConfig(new Robot((mouseX / Main.multiplier) - (Main.scaleUp(7)), (mouseY / Main.multiplier) - (Main.scaleUp(6)), 28, 24)).setVisible(true);
@@ -158,9 +163,6 @@ public class Board extends JPanel implements ActionListener {
                 new CommandGroupConfig(new CommandGroup(x, y)).setVisible(true);
             }
         }
-    }
-
-    public void mouseRelease(MouseEvent m) {
     }
 
     @Override

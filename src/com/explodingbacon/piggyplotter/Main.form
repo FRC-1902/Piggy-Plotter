@@ -9,15 +9,26 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="openFieldButton">
+            <MenuItem class="javax.swing.JMenuItem" name="importField">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+I"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Import Field"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="importFieldActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="selectField">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+O"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Open Field"/>
+                <Property name="text" type="java.lang.String" value="Select Pre-Set Field"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openFieldButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectFieldActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="saveAutoButton">
@@ -37,9 +48,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editActionPerformed"/>
-          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="undoCommand">
               <Properties>
@@ -85,14 +93,25 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" pref="649" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="driveButton" min="-2" pref="99" max="-2" attributes="0"/>
-                  <Component id="robotButton" min="-2" pref="99" max="-2" attributes="0"/>
-                  <Component id="commandButton" min="-2" pref="99" max="-2" attributes="0"/>
-                  <Component id="resetButton" min="-2" pref="99" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="driveButton" min="-2" pref="99" max="-2" attributes="0"/>
+                          <Component id="robotButton" min="-2" pref="99" max="-2" attributes="0"/>
+                          <Component id="commandButton" min="-2" pref="99" max="-2" attributes="0"/>
+                          <Component id="resetButton" min="-2" pref="99" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="pixelRatioText" min="-2" max="-2" attributes="0"/>
+                          <Component id="pixelRatioSlider" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -108,6 +127,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="commandButton" min="-2" pref="42" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="pixelRatioText" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="pixelRatioSlider" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="resetButton" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" min="-2" pref="649" max="-2" attributes="0"/>
@@ -186,6 +209,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JSlider" name="pixelRatioSlider">
+      <Properties>
+        <Property name="maximum" type="int" value="400"/>
+        <Property name="minimum" type="int" value="100"/>
+        <Property name="value" type="int" value="200"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="pixelRatioSliderStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="pixelRatioText">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pixels to inches: 2"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

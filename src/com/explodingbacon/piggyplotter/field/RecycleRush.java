@@ -1,4 +1,4 @@
-package com.explodingbacon.piggyplotter.fields;
+package com.explodingbacon.piggyplotter.field;
 
 import com.explodingbacon.piggyplotter.FieldPiece;
 import com.explodingbacon.piggyplotter.RC;
@@ -8,19 +8,20 @@ import java.awt.Color;
 public class RecycleRush extends Field {
     
     public RecycleRush() {
-        arena = new FieldPiece(0, 0, 324, 648, new Color(57, 106, 198), null);
-        FieldPiece landmark = new FieldPiece(158.25, 159, 8, 8, Color.LIGHT_GRAY, "the Landmark");
+        super("recyclerush.png");
+        arena = new FieldPiece(0, 0, 324, 324, new Color(57, 106, 198), null);
+        FieldPiece landmark = new FieldPiece(158.25, 159, 8, 8, Color.DARK_GRAY, "the Landmark");
         FieldPiece scoringPlatform1 = new FieldPiece(0, landmark.y - 35 - 34.25, 187, 34.25, Color.WHITE, "Scoring Platform One");
         FieldPiece scoringPlatform2 = new FieldPiece(137, landmark.y + landmark.height + 35, 187, 34.25, Color.WHITE, "Scoring Platform Two");
         FieldPiece step = new FieldPiece(0, scoringPlatform2.y + scoringPlatform2.height + 75.1, 324, 25, Color.WHITE, "the Step");
 
         parts.add(arena);
+        parts.add(landmark);
         parts.add(scoringPlatform1);
         parts.add(scoringPlatform2);
         parts.add(step);
-        parts.add(landmark);
 
-        //The landfill. *shudder*
+        //Landfill totes.
         for (int i = 0; i < 5; i++) {
             parts.add(new Tote(i * Tote.w, step.y - Tote.h, Color.GRAY));
         }
@@ -94,8 +95,9 @@ public class RecycleRush extends Field {
         }
 
         //Landfill Zone
-        parts.add(new FieldPiece(0.5, step.y - 51, arena.width - 1, 51, Color.YELLOW, false, null)); //Landfill zone
+        parts.add(new FieldPiece(0.5, step.y - 51, arena.width - 1, 51, Color.YELLOW, false, null));
         
+        //Staging Zone and contents
         for (int i = 0; i < 3; i++) {
             x = 56.5 + (i * (48 + 33));
             y = 35;

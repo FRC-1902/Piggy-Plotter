@@ -1,6 +1,8 @@
 package com.explodingbacon.piggyplotter;
 
-import com.explodingbacon.piggyplotter.fields.CustomField;
+import com.explodingbacon.piggyplotter.field.SelectField;
+import com.explodingbacon.piggyplotter.field.CustomField;
+import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,6 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Main extends javax.swing.JFrame {
 
     public static double multiplier = 2;
+    public static Color baconOrange = new Color(234, 82, 36);
     public static JToggleButton selected = null;
     
     public Main() {
@@ -30,9 +33,12 @@ public class Main extends javax.swing.JFrame {
         commandButton = new javax.swing.JToggleButton();
         driveButton = new javax.swing.JToggleButton();
         resetButton = new javax.swing.JButton();
+        pixelRatioSlider = new javax.swing.JSlider();
+        pixelRatioText = new javax.swing.JLabel();
         menu = new javax.swing.JMenuBar();
         file = new javax.swing.JMenu();
-        openFieldButton = new javax.swing.JMenuItem();
+        importField = new javax.swing.JMenuItem();
+        selectField = new javax.swing.JMenuItem();
         saveAutoButton = new javax.swing.JMenuItem();
         edit = new javax.swing.JMenu();
         undoCommand = new javax.swing.JMenuItem();
@@ -83,16 +89,36 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        file.setText("File");
-
-        openFieldButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        openFieldButton.setText("Open Field");
-        openFieldButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openFieldButtonActionPerformed(evt);
+        pixelRatioSlider.setMaximum(400);
+        pixelRatioSlider.setMinimum(100);
+        pixelRatioSlider.setValue(200);
+        pixelRatioSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                pixelRatioSliderStateChanged(evt);
             }
         });
-        file.add(openFieldButton);
+
+        pixelRatioText.setText("Pixels to inches: 2");
+
+        file.setText("File");
+
+        importField.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        importField.setText("Import Field");
+        importField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importFieldActionPerformed(evt);
+            }
+        });
+        file.add(importField);
+
+        selectField.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        selectField.setText("Select Pre-Set Field");
+        selectField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectFieldActionPerformed(evt);
+            }
+        });
+        file.add(selectField);
 
         saveAutoButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveAutoButton.setText("Export Autonomous");
@@ -106,11 +132,6 @@ public class Main extends javax.swing.JFrame {
         menu.add(file);
 
         edit.setText("Edit");
-        edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
-            }
-        });
 
         undoCommand.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undoCommand.setText("Undo Drive");
@@ -132,13 +153,20 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(robotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(driveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(robotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pixelRatioText)
+                            .addComponent(pixelRatioSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,6 +180,10 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(commandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pixelRatioText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pixelRatioSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -184,7 +216,7 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_commandButtonActionPerformed
 
-    private void openFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFieldButtonActionPerformed
+    private void importFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importFieldActionPerformed
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("FRC Field Files", "field");
         chooser.setFileFilter(filter);
@@ -195,30 +227,27 @@ public class Main extends javax.swing.JFrame {
                 Board.field = new CustomField(field);
             }
         }
-    }//GEN-LAST:event_openFieldButtonActionPerformed
-
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        if (Board.robot != null && !Board.robot.commandGroups.isEmpty()) {
-            //TODO something
-        }
-    }//GEN-LAST:event_editActionPerformed
+    }//GEN-LAST:event_importFieldActionPerformed
 
     private void undoCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoCommandActionPerformed
-        if (Board.robot != null && !Board.robot.commandGroups.isEmpty()) {
-            CommandGroup deadOwner = null;
-            Command dead = null;
-            for (CommandGroup cg : Board.robot.commandGroups) {
-                for (Command c : cg.commands) {
-                    if (c instanceof DriveCommand) {
-                        deadOwner = cg;
-                        dead = c;
+        if (Board.robot != null) {
+            if (!Board.robot.commandGroups.isEmpty()) {
+                CommandGroup deadOwner = null;
+                Command dead = null;
+                for (CommandGroup cg : Board.robot.commandGroups) {
+                    for (Command c : cg.commands) {
+                        if (c instanceof DriveCommand) {
+                            deadOwner = cg;
+                            dead = c;
+                        }
                     }
                 }
-            }
-            if (dead != null) {
-                Board.robot.angle -= ((DriveCommand)dead).angle;
-                deadOwner.commands.remove(dead);
-                Board.field.parts.remove(dead);
+                if (dead != null) {
+                    Board.robot.angle -= ((DriveCommand) dead).angle;
+                    deadOwner.commands.remove(dead);
+                }
+            } else {
+                Board.robot.angle = 0;
             }
         }
     }//GEN-LAST:event_undoCommandActionPerformed
@@ -265,6 +294,16 @@ public class Main extends javax.swing.JFrame {
         Board.field.parts.remove(Board.robot);
         Board.robot = null;
     }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void selectFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectFieldActionPerformed
+        new SelectField().setVisible(true);
+    }//GEN-LAST:event_selectFieldActionPerformed
+
+    private void pixelRatioSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pixelRatioSliderStateChanged
+        double value = pixelRatioSlider.getValue() / 100.0;
+        pixelRatioText.setText("Pixels to inches: " + value);
+        Main.multiplier = value;
+    }//GEN-LAST:event_pixelRatioSliderStateChanged
 
     public void updateButtons(JToggleButton button) {
         if (button == driveButton) {
@@ -331,12 +370,15 @@ public class Main extends javax.swing.JFrame {
     public static javax.swing.JToggleButton driveButton;
     private javax.swing.JMenu edit;
     private javax.swing.JMenu file;
+    private javax.swing.JMenuItem importField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menu;
-    private javax.swing.JMenuItem openFieldButton;
+    private javax.swing.JSlider pixelRatioSlider;
+    private javax.swing.JLabel pixelRatioText;
     private javax.swing.JButton resetButton;
     public static javax.swing.JToggleButton robotButton;
     private javax.swing.JMenuItem saveAutoButton;
+    private javax.swing.JMenuItem selectField;
     private javax.swing.JMenuItem undoCommand;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,16 +1,16 @@
 package com.explodingbacon.piggyplotter;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Robot extends FieldPiece {
     
     public List<CommandGroup> commandGroups = new ArrayList<>();
+    public double startingAngle = 0;
     public double angle = 0;
     
     public Robot(double x, double y, double width, double height) {
-        super(x, y, width, height, Color.BLACK, "Robot");
+        super(x, y, width, height, Main.baconOrange, "Robot");
     }
     
     @Override

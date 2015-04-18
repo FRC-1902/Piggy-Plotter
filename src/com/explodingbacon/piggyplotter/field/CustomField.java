@@ -1,9 +1,8 @@
-package com.explodingbacon.piggyplotter.fields;
+package com.explodingbacon.piggyplotter.field;
 
 import com.explodingbacon.piggyplotter.FieldPiece;
 import com.explodingbacon.piggyplotter.Main;
 import com.explodingbacon.piggyplotter.Tote;
-import com.explodingbacon.piggyplotter.fields.Field;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +14,7 @@ import java.util.logging.Logger;
 public class CustomField extends Field {
 
     public CustomField(File file) {
+        super("questionmark.png");
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String info = br.readLine();

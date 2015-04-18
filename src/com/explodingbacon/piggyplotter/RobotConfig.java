@@ -23,7 +23,7 @@ public class RobotConfig extends javax.swing.JFrame {
         rY = robot.y;
         rWidth = robot.width;
         rHeight = robot.height;
-        angleBox.setText(robot.angle + "");
+        angleBox.setText(robot.startingAngle + "");
         boolean broke = false;
         for (CommandGroup cg : robot.commandGroups) {
             for (Command c : cg.commands) {
@@ -36,6 +36,9 @@ public class RobotConfig extends javax.swing.JFrame {
                 }
             }
             if (broke) break;
+        }
+        if (Board.robot == null) {
+            Board.field.parts.add(robot);
         }
         refreshDistances();
     }
@@ -305,11 +308,9 @@ public class RobotConfig extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(distanceLeft)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(distanceLeftBox, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(distanceLeftBox, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,6 +335,10 @@ public class RobotConfig extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(distanceUp)
+                    .addComponent(distanceUpBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(distanceLeft)
                     .addComponent(distanceLeftBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -342,13 +347,9 @@ public class RobotConfig extends javax.swing.JFrame {
                     .addComponent(distanceRightBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(distanceUp)
-                    .addComponent(distanceUpBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(distanceDown)
                     .addComponent(distanceDownBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirm)
                     .addComponent(cancel)
@@ -364,11 +365,10 @@ public class RobotConfig extends javax.swing.JFrame {
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         robot.x = rX;
         robot.y = rY;
-        robot.width = rWidth;
-        robot.height = rHeight;
-        robot.angle = Double.parseDouble(angleBox.getText());
+        robot.width = Double.parseDouble(widthBox.getText());
+        robot.height = Double.parseDouble(lengthBox.getText());
+        robot.startingAngle = Double.parseDouble(angleBox.getText());
         Board.robot = robot;
-        Board.field.parts.add(robot);
         dispose();
     }//GEN-LAST:event_confirmActionPerformed
 

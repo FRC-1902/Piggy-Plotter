@@ -103,6 +103,11 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="distanceUp" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="distanceUpBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="distanceLeft" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="distanceLeftBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -113,15 +118,10 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="distanceUp" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="distanceUpBox" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="distanceDown" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="distanceDownBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="confirm" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancel" alignment="3" min="-2" max="-2" attributes="0"/>
