@@ -3,12 +3,14 @@ package com.explodingbacon.piggyplotter;
 import com.explodingbacon.piggyplotter.field.SelectField;
 import com.explodingbacon.piggyplotter.field.CustomField;
 import java.awt.Color;
+import java.awt.Image;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
@@ -19,9 +21,12 @@ public class Main extends javax.swing.JFrame {
     public static double multiplier = 2;
     public static Color baconOrange = new Color(234, 82, 36);
     public static JToggleButton selected = null;
+    public static Image icon;
     
     public Main() {
         initComponents();
+        icon = new ImageIcon(this.getClass().getResource("icon.png")).getImage();
+        setIconImage(icon);
     }    
 
     @SuppressWarnings("unchecked")

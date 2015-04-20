@@ -13,7 +13,7 @@ public class RecycleRush extends Field {
         FieldPiece landmark = new FieldPiece(158.25, 159, 8, 8, Color.DARK_GRAY, "the Landmark");
         FieldPiece scoringPlatform1 = new FieldPiece(0, landmark.y - 35 - 34.25, 187, 34.25, Color.WHITE, "Scoring Platform One");
         FieldPiece scoringPlatform2 = new FieldPiece(137, landmark.y + landmark.height + 35, 187, 34.25, Color.WHITE, "Scoring Platform Two");
-        FieldPiece step = new FieldPiece(0, scoringPlatform2.y + scoringPlatform2.height + 75.1, 324, 25, Color.WHITE, "the Step");
+        FieldPiece step = new FieldPiece(0, scoringPlatform2.y + scoringPlatform2.height + 75.1, 324, 27, Color.WHITE, "the Step");
 
         parts.add(arena);
         parts.add(landmark);

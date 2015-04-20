@@ -1,9 +1,12 @@
 package com.explodingbacon.piggyplotter.field;
 
+import com.explodingbacon.piggyplotter.Main;
+
 public class SelectField extends javax.swing.JFrame {
 
     public SelectField() {
         initComponents();
+        setIconImage(Main.icon);
     }
 
     /**

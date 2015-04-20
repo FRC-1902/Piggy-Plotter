@@ -12,7 +12,8 @@ public class CommandGroupConfig extends javax.swing.JFrame {
         initComponents();
         this.commandGroup = commandGroup;
         commands = new ArrayList<>(commandGroup.commands);
-        nameField.setText(commandGroup.name);
+        nameField.setText(commandGroup.name);               
+        setIconImage(Main.icon);
         updateCommandList();
     }
     

@@ -40,6 +40,7 @@ public class RobotConfig extends javax.swing.JFrame {
         if (Board.robot == null) {
             Board.field.parts.add(robot);
         }
+        setIconImage(Main.icon);
         refreshDistances();
     }
     
