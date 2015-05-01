@@ -10,7 +10,7 @@ public class Robot extends FieldPiece {
     public double angle = 0;
     
     public Robot(double x, double y, double width, double height) {
-        super(x, y, width, height, Main.baconOrange, "Robot");
+        super(x, y, width, height, Main.robotColor, "Robot");
     }
     
     @Override

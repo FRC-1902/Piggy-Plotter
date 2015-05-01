@@ -19,7 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Main extends javax.swing.JFrame {
 
     public static double multiplier = 2;
-    public static Color baconOrange = new Color(234, 82, 36);
+    public static Color robotColor = new Color(30, 30, 30);
     public static JToggleButton selected = null;
     public static Image icon;
     

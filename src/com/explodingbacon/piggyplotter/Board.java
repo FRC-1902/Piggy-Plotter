@@ -14,8 +14,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
@@ -100,7 +98,7 @@ public class Board extends ClickableJPanel implements ActionListener {
             if (Main.selected == Main.robotButton) {
                 if (robot == null) {
                     Color oldColor = g.getColor();
-                    g.setColor(Main.baconOrange);
+                    g.setColor(Main.robotColor);
                     g.fillRect(mouseX - (Main.scaleUp(28) / 2), mouseY - (Main.scaleUp(24) / 2), Main.scaleUp(28), Main.scaleUp(24));
                     g.setColor(oldColor);
                 }
