@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -45,6 +46,7 @@ public class Main extends javax.swing.JFrame {
         importField = new javax.swing.JMenuItem();
         selectField = new javax.swing.JMenuItem();
         saveAutoButton = new javax.swing.JMenuItem();
+        update = new javax.swing.JMenuItem();
         edit = new javax.swing.JMenu();
         undoCommand = new javax.swing.JMenuItem();
 
@@ -133,6 +135,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         file.add(saveAutoButton);
+
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
+        file.add(update);
 
         menu.add(file);
 
@@ -310,6 +320,18 @@ public class Main extends javax.swing.JFrame {
         Main.multiplier = value;
     }//GEN-LAST:event_pixelRatioSliderStateChanged
 
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        int result = JOptionPane.showConfirmDialog(null, "Updating will completely close Piggy Plotter. Do you want to continue?");
+        if (result == 0) {
+            try {
+                Runtime.getRuntime().exec("java -jar updater.jar");
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.exit(0);
+        }
+    }//GEN-LAST:event_updateActionPerformed
+
     public void updateButtons(JToggleButton button) {
         if (button == driveButton) {
             selected = driveButton;
@@ -385,5 +407,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveAutoButton;
     private javax.swing.JMenuItem selectField;
     private javax.swing.JMenuItem undoCommand;
+    private javax.swing.JMenuItem update;
     // End of variables declaration//GEN-END:variables
 }
